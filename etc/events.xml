@@ -1,0 +1,46 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!-- add recurring data to card payment method specific input -->
+    <event name="worldline_cc_card_payment_method_specific_input_builder">
+        <observer name="worldline_recurring_payments_cc_add_data_to_card_payment_method_specific_input"
+                  instance="Worldline\RecurringPayments\Observer\CreditCard\Service\Creator\Request\CardPaymentMethodSIDBuilder\AddRecurringData" />
+    </event>
+    <event name="worldline_hosted_checkout_card_payment_method_specific_input_builder">
+        <observer name="worldline_recurring_payments_hc_add_data_to_card_payment_method_specific_input"
+                  instance="Worldline\RecurringPayments\Observer\HostedCheckout\Service\Creator\Request\CardPaymentMethodSIDBuilder\AddRecurringData" />
+    </event>
+    <event name="worldline_redirect_payment_card_payment_method_specific_input_builder">
+        <observer name="worldline_recurring_payments_rp_add_data_to_card_payment_method_specific_input"
+                  instance="Worldline\RecurringPayments\Observer\HostedCheckout\Service\Creator\Request\CardPaymentMethodSIDBuilder\AddRecurringData" />
+    </event>
+
+    <!-- add recurring data to hosted checkout specific input -->
+    <event name="worldline_hosted_checkout_hosted_checkout_specific_input_builder">
+        <observer name="worldline_recurring_payments_hc_add_data_to_hosted_checkout_specific_input"
+                  instance="Worldline\RecurringPayments\Observer\HostedCheckout\Service\Creator\Request\HostedCheckoutSIDBuilder\AddRecurringData" />
+    </event>
+
+    <!-- add recurring data to redirect payment method specific input -->
+    <event name="worldline_redirect_payment_redirect_payment_method_specific_input_builder">
+        <observer name="worldline_recurring_payments_rp_add_data_to_redirect_payment_method_specific_input"
+                  instance="Worldline\RecurringPayments\Observer\RedirectPayment\Service\Creator\Request\RedirectPaymentMethodSIDBuilder\AddRecurringData" />
+    </event>
+
+    <!-- add recurring param to get payment product params -->
+    <event name="worldline_core_get_payment_product_params_builder">
+        <observer name="worldline_recurring_payments_core_add_data_to_get_payment_product_params"
+                  instance="Worldline\RecurringPayments\Observer\PaymentCore\Service\Payment\GetPaymentProductsRequestBuilder\AddRecurringParam" />
+    </event>
+
+    <!-- set ask consumer consent to create hosted tokenization request -->
+    <event name="worldline_cc_create_hosted_tokenization_request_builder">
+        <observer name="worldline_recurring_payments_cc_set_ask_consumer_consent"
+                  instance="Worldline\RecurringPayments\Observer\CreditCard\Service\HostedTokenizationSession\CreateRequestBodyBuilder\SetAskConsumerConsent" />
+    </event>
+
+    <!-- add custom cache param for get payment products -->
+    <event name="worldline_core_payment_products_cache_id_generate">
+        <observer name="worldline_recurring_payments_core_generate_cache_id"
+                  instance="Worldline\RecurringPayments\Observer\PaymentCore\Model\Ui\PaymentProductsProvider\GenerateCacheId" />
+    </event>
+</config>

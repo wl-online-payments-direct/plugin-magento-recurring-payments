@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <worldline_cc>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>Wordline Credit Card</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_cc>
+            <worldline_hosted_checkout>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>Wordline Hosted Checkout</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_hosted_checkout>
+            <worldline_redirect_payment>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>Wordline Redirect Payment</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment>
+        </payment>
+    </default>
+</config>

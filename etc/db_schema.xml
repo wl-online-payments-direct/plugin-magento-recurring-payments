@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="worldline_recurring_payments_subscription" resource="default" engine="innodb" comment="Worldline Failed Payment Log">
+        <column xsi:type="int" name="id" unsigned="true" nullable="false" identity="true" />
+        <column xsi:type="varchar" name="subscription_id" nullable="true" length="128" comment="Subscription ID" />
+        <column xsi:type="varchar" name="increment_id" nullable="false" length="32" comment="Increment Order ID" />
+        <column xsi:type="varchar" name="token" nullable="false" length="255" comment="Gateway Token" />
+        <column xsi:type="int" name="payment_product_id" unsigned="true" nullable="false" comment="Payment Product Id" />
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="id"/>
+        </constraint>
+    </table>
+</schema>

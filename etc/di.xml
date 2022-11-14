@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference type="Worldline\RecurringPayments\Model\SubscriptionEntity\Subscription" for="Worldline\RecurringPayments\Api\Data\SubscriptionInterface" />
+    <preference type="Worldline\RecurringPayments\Model\SubscriptionEntity\SubscriptionRepository" for="Worldline\RecurringPayments\Api\SubscriptionRepositoryInterface" />
+
+    <type name="Amasty\RecurringPayments\Model\Config\ConfigurationValidator">
+        <arguments>
+            <argument name="methodValidators" xsi:type="array">
+                <item name="worldline_cc" xsi:type="object">Worldline\RecurringPayments\Model\CreditCard\Config\ConfigurationValidator</item>
+                <item name="worldline_hosted_checkout" xsi:type="object">Worldline\RecurringPayments\Model\HostedCheckout\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\RecurringPayments\Model\SubscriptionManagement">
+        <arguments>
+            <argument name="subscriptionProcessors" xsi:type="array">
+                <item name="worldline_core.subscription_processors" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Customer\SubscriptionGrid\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- handle subscriptions creation -->
+    <virtualType name="Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual" type="Amasty\RecurringPayments\Model\Subscription\Create\DefaultProcessor">
+        <arguments>
+            <argument name="createSubscriptionHandler" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Create\CreateSubscriptionHandler</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Amasty\RecurringPayments\Model\Subscription\Create\ProcessorPool">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="worldline_cc" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_hosted_checkout" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- save subscription details -->
+    <virtualType name="Worldline\CreditCard\Gateway\Response\HandlerChain\Authorization\Virtual" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="subscription_details" xsi:type="string">Worldline\RecurringPayments\Gateway\CreditCard\Response\SubscriptionDetailsHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Worldline\HostedCheckout\Gateway\Response\HandlerChain\Authorization\Virtual" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="subscription_details" xsi:type="string">Worldline\RecurringPayments\Gateway\HostedCheckout\Response\SubscriptionDetailsHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Worldline\RedirectPayment\Gateway\Response\HandlerChain\Authorization\Virtual" type="Magento\Payment\Gateway\Response\HandlerChain">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="subscription_details" xsi:type="string">Worldline\RecurringPayments\Gateway\HostedCheckout\Response\SubscriptionDetailsHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Amasty\RecurringPayments\Model\Subscription\Scheduler\Handler\SubscriptionCharge">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="worldline_cc" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_hosted_checkout" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Vault\Model\PaymentMethodList">
+        <plugin name="RecurringPayments::HideVault"
+                type="Worldline\RecurringPayments\Plugin\Vault\Model\PaymentMethodList\HideVault"/>
+    </type>
+</config>

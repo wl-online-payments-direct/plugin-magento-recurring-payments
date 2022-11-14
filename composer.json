@@ -1,0 +1,33 @@
+{
+    "name": "worldline/module-magento-recurring-payments",
+    "description": "Worldline Recurring Payments",
+    "require": {
+        "php":">=7.3.0",
+        "ext-json": "*",
+        "worldline/module-magento-payment-credit-card": "^1.2.0",
+        "worldline/module-magento-payment-redirect-payment": "^1.1.0",
+        "amasty/recurring-payments": "^1.6.13"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0"
+    ],
+    "provide": {
+        "amasty/recurring-payments-gateway": "1.0.0"
+    },
+    "authors": [
+        {
+            "name": "Worldline Online Payments",
+            "homepage": "https://worldline.com/"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Worldline\\RecurringPayments\\": ""
+        }
+    }
+}

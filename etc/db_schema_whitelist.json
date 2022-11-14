@@ -1,0 +1,14 @@
+{
+    "worldline_recurring_payments_subscription": {
+        "column": {
+            "id": true,
+            "subscription_id": true,
+            "increment_id": true,
+            "token": true,
+            "payment_product_id": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}
