@@ -4,5 +4,9 @@
 
 Change log:
 
+1.1.0
+- Improve the "waiting" page
+- Add the "pending" page
+
 1.0.0
 - Support recurring payments based on Amasty recurring payment extension
