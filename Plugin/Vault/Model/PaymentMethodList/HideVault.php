@@ -38,6 +38,7 @@ class HideVault
      * @return array
      * @throws LocalizedException
      * @throws NoSuchEntityException
+     * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
     public function afterGetActiveList(PaymentMethodList $subject, array $result, $storeId): array
     {

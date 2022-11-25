@@ -3,6 +3,8 @@
 ## Recurring Payments
 
 Change log:
+1.1.1
+- Improve work for multi website instances
 
 1.1.0
 - Improve the "waiting" page
