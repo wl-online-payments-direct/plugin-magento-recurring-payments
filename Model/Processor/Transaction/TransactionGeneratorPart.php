@@ -1,22 +1,17 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Worldline\RecurringPayments\Model\Processor\Transaction;
 
-use Amasty\RecurringPayments\Api\Data\TransactionInterface;
-use Amasty\RecurringPayments\Api\Generators\RecurringTransactionGeneratorInterface;
 use Amasty\RecurringPayments\Model\Config as AmRecurringConfig;
-use Amasty\RecurringPayments\Model\Config\Source\Status;
 use Amasty\RecurringPayments\Model\Subscription\Email\EmailNotifier;
 use Amasty\RecurringPayments\Model\Subscription\HandleOrder\HandleOrderContext;
 use Amasty\RecurringPayments\Model\Subscription\HandleOrder\HandlerPartInterface;
-use Magento\Quote\Api\Data\CartInterface;
-use Magento\Sales\Api\Data\OrderInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
+use Worldline\CreditCard\Api\Service\Payment\CreatePaymentServiceInterface;
 use Worldline\CreditCard\Gateway\Request\PaymentDataBuilder;
-use Worldline\CreditCard\Service\Creator\Request;
-use Worldline\RecurringPayments\Service\Creator\RequestBuilder;
-use Worldline\RecurringPayments\Api\SubscriptionRepositoryInterface;
+use Worldline\RecurringPayments\Service\Payment\CreatePaymentRequestBuilder;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -26,12 +21,7 @@ class TransactionGeneratorPart implements HandlerPartInterface
     public const PAYMENT_PRODUCT_ID = 'payment_product_id';
 
     /**
-     * @var Request
-     */
-    private $createRequest;
-
-    /**
-     * @var RequestBuilder
+     * @var CreatePaymentRequestBuilder
      */
     private $createRequestBuilder;
 
@@ -51,31 +41,29 @@ class TransactionGeneratorPart implements HandlerPartInterface
     private $orderRepository;
 
     /**
-     * @var SubscriptionRepositoryInterface
+     * @var CreatePaymentServiceInterface
      */
-    private $wlSubscriptionRepository;
+    private $createPaymentService;
 
     /**
-     * @var RecurringTransactionGeneratorInterface
+     * @var TransactionGeneratorManager
      */
-    private $recurringTransactionGenerator;
+    private $generatorManager;
 
     public function __construct(
-        Request $createRequest,
-        RequestBuilder $createRequestBuilder,
+        CreatePaymentRequestBuilder $createRequestBuilder,
         EmailNotifier $emailNotifier,
         AmRecurringConfig $amRecurringConfig,
         OrderRepositoryInterface $orderRepository,
-        SubscriptionRepositoryInterface $wlSubscriptionRepository,
-        RecurringTransactionGeneratorInterface $recurringTransactionGenerator
+        CreatePaymentServiceInterface $createPaymentService,
+        TransactionGeneratorManager $generatorManager
     ) {
-        $this->createRequest = $createRequest;
         $this->createRequestBuilder = $createRequestBuilder;
         $this->emailNotifier = $emailNotifier;
         $this->amRecurringConfig = $amRecurringConfig;
         $this->orderRepository = $orderRepository;
-        $this->wlSubscriptionRepository = $wlSubscriptionRepository;
-        $this->recurringTransactionGenerator = $recurringTransactionGenerator;
+        $this->createPaymentService = $createPaymentService;
+        $this->generatorManager = $generatorManager;
     }
 
     public function handlePartial(HandleOrderContext $context): bool
@@ -89,17 +77,17 @@ class TransactionGeneratorPart implements HandlerPartInterface
 
         $quote->reserveOrderId();
 
-        $this->setToken($quote, $orderIncrementId);
-        $this->setPaymentProductId($quote, $orderIncrementId);
+        $this->generatorManager->setToken($quote, $orderIncrementId);
+        $this->generatorManager->setPaymentProductId($quote, $orderIncrementId);
 
         $request = $this->createRequestBuilder->build($quote);
-        $response = $this->createRequest->create($request, $storeId);
+        $response = $this->createPaymentService->execute($request, $storeId);
 
         $transactionId = $response->getPayment()->getId();
         $payment->setAdditionalInformation(PaymentDataBuilder::PAYMENT_ID, $transactionId);
         $context->setTransactionId($transactionId);
 
-        $recurringTransaction = $this->generateRecurringTransaction($context, $order, $transactionId);
+        $recurringTransaction = $this->generatorManager->generateRecurringTransaction($context, $order, $transactionId);
         $context->setRecurringTransaction($recurringTransaction);
 
         if ($this->amRecurringConfig->isNotifySubscriptionPurchased($storeId)) {
@@ -119,40 +107,5 @@ class TransactionGeneratorPart implements HandlerPartInterface
         if (!$context->getQuote()) {
             throw new \InvalidArgumentException('No quote in context');
         }
-    }
-
-    private function setToken(CartInterface $quote, string $orderIncrementId): void
-    {
-        $payment = $quote->getPayment();
-        $wlSubscription = $this->wlSubscriptionRepository->getByIncrementId($orderIncrementId);
-        $publicToken = $wlSubscription->getToken();
-        if ($publicToken) {
-            $payment->setAdditionalInformation(PaymentDataBuilder::TOKEN_ID, $publicToken);
-        }
-    }
-
-    private function setPaymentProductId(CartInterface $quote, string $orderIncrementId): void
-    {
-        $payment = $quote->getPayment();
-        $wlSubscription = $this->wlSubscriptionRepository->getByIncrementId($orderIncrementId);
-        $payProductId = $wlSubscription->getPaymentProductId();
-        if ($payProductId) {
-            $payment->setAdditionalInformation(self::PAYMENT_PRODUCT_ID, $payProductId);
-        }
-    }
-
-    private function generateRecurringTransaction(
-        HandleOrderContext $context,
-        OrderInterface $order,
-        string $transactionId
-    ): TransactionInterface {
-        return $this->recurringTransactionGenerator->generate(
-            (float)$context->getQuote()->getBaseGrandTotal(),
-            $order->getIncrementId(),
-            $order->getOrderCurrencyCode(),
-            $transactionId,
-            Status::SUCCESS,
-            $context->getSubscription()->getSubscriptionId()
-        );
     }
 }

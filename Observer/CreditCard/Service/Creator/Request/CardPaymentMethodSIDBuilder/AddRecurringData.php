@@ -24,10 +24,10 @@ class AddRecurringData implements ObserverInterface
     }
 
     /**
-     * @see \Worldline\CreditCard\Service\Creator\Request\CardPaymentMethodSpecificInputDataBuilder::build()
-     *
      * @param Observer $observer
      * @return void
+     * @see \Worldline\CreditCard\Service\CreatePaymentRequest\CardPaymentMethodSpecificInputDataBuilder::build()
+     *
      */
     public function execute(Observer $observer)
     {
@@ -45,6 +45,7 @@ class AddRecurringData implements ObserverInterface
             return;
         }
 
+        $cardPaymentMethodSpecificInput->setSkipAuthentication(false);
         $cardPaymentMethodSpecificInput->setPaymentProductId($payProductId);
         $cardPaymentMethodSpecificInput->setAuthorizationMode(Config::AUTHORIZATION_MODE_SALE);
         $cardPaymentMethodSpecificInput->setUnscheduledCardOnFileSequenceIndicator('first');

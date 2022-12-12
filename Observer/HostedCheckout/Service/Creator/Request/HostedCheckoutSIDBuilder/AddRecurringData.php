@@ -8,12 +8,12 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Api\Data\CartInterface;
 use OnlinePayments\Sdk\Domain\HostedCheckoutSpecificInput;
-use OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckout;
-use OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckoutFactory;
 use OnlinePayments\Sdk\Domain\PaymentProductFilter;
 use OnlinePayments\Sdk\Domain\PaymentProductFilterFactory;
-use Worldline\HostedCheckout\Service\Creator\Request\SpecificInputDataBuilder;
-use Worldline\PaymentCore\Model\Ui\PaymentProductsProvider;
+use OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckout;
+use OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckoutFactory;
+use Worldline\HostedCheckout\Service\CreateHostedCheckoutRequest\SpecificInputDataBuilder;
+use Worldline\PaymentCore\Ui\PaymentProductsProvider;
 
 class AddRecurringData implements ObserverInterface
 {
@@ -50,10 +50,10 @@ class AddRecurringData implements ObserverInterface
     }
 
     /**
-     * @see \Worldline\HostedCheckout\Service\Creator\Request\SpecificInputDataBuilder::build()
-     *
      * @param Observer $observer
      * @return void
+     * @see \Worldline\HostedCheckout\Service\CreateHostedCheckoutRequest\SpecificInputDataBuilder::build()
+     *
      */
     public function execute(Observer $observer)
     {

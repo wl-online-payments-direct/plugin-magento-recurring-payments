@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Worldline\RecurringPayments\Service\Creator\Request;
+namespace Worldline\RecurringPayments\Service\CreatePaymentRequest;
 
 use Magento\Quote\Api\Data\CartInterface;
 use OnlinePayments\Sdk\Domain\CardPaymentMethodSpecificInput;
@@ -31,6 +31,7 @@ class CardPaymentMethodSpecificInputDataBuilder
 
         $cardPaymentMethodSpecificInput->setToken($publicToken);
         $cardPaymentMethodSpecificInput->setIsRecurring(true);
+        $cardPaymentMethodSpecificInput->setSkipAuthentication(false);
         $cardPaymentMethodSpecificInput->setTransactionChannel('ECOMMERCE');
         $cardPaymentMethodSpecificInput->setAuthorizationMode(self::AUTHORIZATION_MODE_SALE);
 

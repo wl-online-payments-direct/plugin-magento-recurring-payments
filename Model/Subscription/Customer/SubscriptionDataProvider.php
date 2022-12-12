@@ -12,9 +12,9 @@ use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\FilterGroupBuilder;
 use Magento\Framework\Api\SearchCriteriaBuilder;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Worldline\CreditCard\UI\ConfigProvider as CCConfigProvider;
-use Worldline\HostedCheckout\UI\ConfigProvider as HCConfigProvider;
-use Worldline\RedirectPayment\UI\ConfigProvider as RPConfigProvider;
+use Worldline\CreditCard\Ui\ConfigProvider as CCConfigProvider;
+use Worldline\HostedCheckout\Ui\ConfigProvider as HCConfigProvider;
+use Worldline\RedirectPayment\Ui\ConfigProvider as RPConfigProvider;
 
 class SubscriptionDataProvider
 {

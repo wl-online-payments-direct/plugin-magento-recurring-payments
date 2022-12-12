@@ -11,6 +11,9 @@ use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Worldline\PaymentCore\Api\Data\CacheIdentifierInterface;
 
+/**
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
+ */
 class GenerateCacheId implements ObserverInterface
 {
     /**
@@ -30,12 +33,11 @@ class GenerateCacheId implements ObserverInterface
     }
 
     /**
-     * @see \Worldline\PaymentCore\Model\Ui\PaymentProductsProvider::generateCacheIdentifier()
-     *
      * @param Observer $observer
      * @return void
      * @throws LocalizedException
      * @throws NoSuchEntityException
+     * @see \Worldline\PaymentCore\Ui\PaymentProductsProvider::generateCacheIdentifier()
      */
     public function execute(Observer $observer): void
     {

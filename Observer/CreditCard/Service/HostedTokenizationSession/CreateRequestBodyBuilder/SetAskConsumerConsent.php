@@ -10,8 +10,11 @@ use Magento\Framework\Event\ObserverInterface;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Exception\NoSuchEntityException;
 use OnlinePayments\Sdk\Domain\CreateHostedTokenizationRequest;
-use Worldline\CreditCard\Service\HostedTokenizationSession\CreateRequestBodyBuilder;
+use Worldline\CreditCard\Service\HostedTokenization\CreateRequestBodyBuilder;
 
+/**
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
+ */
 class SetAskConsumerConsent implements ObserverInterface
 {
     /**
@@ -31,7 +34,7 @@ class SetAskConsumerConsent implements ObserverInterface
     }
 
     /**
-     * @see \Worldline\CreditCard\Service\HostedTokenizationSession\CreateRequestBodyBuilder::build()
+     * @see \Worldline\CreditCard\Service\HostedTokenization\CreateRequestBodyBuilder::build()
      *
      * @param Observer $observer
      * @return void

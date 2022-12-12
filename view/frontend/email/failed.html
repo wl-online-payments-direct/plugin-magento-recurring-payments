@@ -1,0 +1,159 @@
+<!--@subject {{trans "Subscription. Payment Failed" }} @-->
+
+<!--@vars {
+"var customer.getFirstName()|escape":"Customer Name",
+"var store.getFrontendName()":"Store Name",
+"var product":"Product Data",
+"var product.product_id":"Product ID",
+"var product.product_name":"Product Name",
+"var product.product_image":"Product Image",
+"var product.product_url":"Product Url",
+"var recurring_data":"Subscription Data",
+"var subscription_id":"Subscription Id",
+"var recurring_data.trial_image":"Subscription Trial Image",
+"var recurring_data.is_initial_fee":"Is Initial Fee Exist",
+"var recurring_data.interval":"Subscription Interval",
+"var recurring_data.initial_fee":"Subscription Initial Fee",
+"var recurring_data.regular_payment":"Subscription Regular Payment",
+"var recurring_data.discount_amount":"Subscription Discount Amount",
+"var recurring_data.payment_with_discount":"Subscription Payment With Discount",
+"var recurring_data.discount_cycle":"Subscription Discount Cycle",
+"var recurring_data.trial_status":"Subscription Trial Status",
+"var recurring_data.trial_days":"Subscription Trial Days",
+"var recurring_data.start_date":"Subscription Start Date",
+"store url=\"\"":"Store URL"
+} @-->
+
+
+{{template config_path="design/email/header_template"}}
+
+<div class="amrec-main-container">
+    <div class="amrec-header-container">
+        <span class="amrec-title">{{trans "Subscription. Payment Failed"}}</span>
+        <div class="amrec-image-wrapper">
+            <img class="amrec-image"
+                 src="{{view url='Amasty_RecurringPayments/images/email/cancelled.png'}}"
+                 alt="{{trans 'Subscription Payment Failed'}}">
+        </div>
+    </div>
+
+    <div class="amrec-text-container">
+        <p class="amrec-message"><strong class="amrec-name">{{trans 'Dear %customer_name,' customer_name=$customer.getFirstName()}}</strong>
+            {{trans 'There has been a problem with the payment of your subscription %subscription_id. Don’t worry, we will try it again later!' subscription_id=$subscription_id}}
+        </p>
+        <p class="amrec-message">
+            {{trans 'Maybe your card has expired, or you received a new card from your bank. Please make sure it is working correctly to be sure your subscription is not stopped!'}}
+        </p>
+        <p class="amrec-message">
+            {{trans 'Don’t hesitate to contact us should you have any questions!'}}
+        </p>
+    </div>
+
+    <div class="amrec-product-container">
+        {{if product.product_id}}
+        <div class="amrec-image-wrapper amrec-image">
+            <img class="amrec-image"
+                 src="{{var product.product_image}}"
+                 alt="{{var product.product_name}}">
+        </div>
+        <div class="amrec-subscription-info amrec-info">
+            <table>
+                <tbody>
+                <tr class="amrec-row">
+                    <td class="amrec-name amrec-cell" colspan="2">
+                        <a href="{{var product.product_url}}">{{var product.product_name}}</a>
+                    </td>
+                </tr>
+                <tr class="amrec-row">
+                    <td class="amrec-cell">
+                        <strong>{{trans 'Subscription'}}</strong>
+                    </td>
+                    <td class="amrec-cell">
+                        {{var subscription_id}}
+                    </td>
+                </tr>
+                <tr class="amrec-row">
+                    <td class="amrec-cell">
+                        <strong>{{trans 'Delivery & Billing Cycle'}}</strong>
+                    </td>
+                    <td class="amrec-cell">
+                        {{var recurring_data.interval}}
+                    </td>
+                </tr>
+                {{/if}}
+                {{if recurring_data.is_initial_fee}}
+                <tr class="amrec-row">
+                    <td class="amrec-cell">
+                        <strong>{{trans 'Initial Fee'}}</strong>
+                    </td>
+                    <td class="amrec-cell">
+                        {{var recurring_data.initial_fee}}
+                    </td>
+                </tr>
+                {{/if}}
+                <tr class="amrec-row">
+                    <td class="amrec-cell">
+                        <strong>{{trans 'Regular Payment'}}</strong>
+                    </td>
+                    <td class="amrec-cell">
+                        {{var recurring_data.payment_with_discount}}
+                    </td>
+                </tr>
+                {{if recurring_data.discount_cycle}}
+                <tr class="amrec-row">
+                    <td class="amrec-cell">
+                        <strong>{{trans 'Discounted Cycles'}}</strong>
+                    </td>
+                    <td class="amrec-cell">
+                        {{var recurring_data.discount_cycle}}
+                        <span>
+                            {{trans '(After the first %discount_cycle cycle(s) you will be paying <span>%regular_payment</span> per delivery)'
+                            discount_cycle=$recurring_data.discount_cycle regular_payment=$recurring_data.regular_payment}}
+                        </span>
+                    </td>
+                </tr>
+                {{/if}}
+                <tr class="amrec-row">
+                    <td class="amrec-cell">
+                        <strong>{{trans 'Free Trials'}}</strong>
+                    </td>
+                    <td class="amrec-cell">
+                        <img class="amrec-image-status"
+                             src="{{var recurring_data.trial_image}}">
+                    </td>
+                </tr>
+                {{if recurring_data.trial_status}}
+                <tr class="amrec-row">
+                    <td class="amrec-cell">
+                        <strong>{{trans 'Number of Trial Days'}}</strong>
+                    </td>
+                    <td class="amrec-cell">
+                        {{var recurring_data.trial_days}}
+                    </td>
+                </tr>
+                {{/if}}
+                {{if product.product_id}}
+                <tr class="amrec-row">
+                    <td class="amrec-cell">
+                        <strong>{{trans 'Subscription Start'}}</strong>
+                    </td>
+                    <td class="amrec-cell">
+                        {{var recurring_data.start_date}}
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        {{/if}}
+    </div>
+
+<!--    <div class="amrec-button-wrapper">-->
+<!--        <a href="#" class="amrec-button" title="{{trans "View Details"}}">{{trans "View Details"}}</a>-->
+<!--    </div>-->
+
+    <div class="amrec-regards-wrapper" >
+        <span class="amrec-regards">{{trans "Kindest Regards"}}, {{var store.getFrontendName()}} {{trans "Team"}}</span>
+    </div>
+</div>
+
+{{template config_path="design/email/footer_template"}}
