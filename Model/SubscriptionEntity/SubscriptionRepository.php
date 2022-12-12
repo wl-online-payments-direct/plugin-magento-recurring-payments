@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Worldline\RecurringPayments\Model\SubscriptionEntity;
 
 use Worldline\RecurringPayments\Api\Data\SubscriptionInterface;
+use Worldline\RecurringPayments\Api\Data\SubscriptionInterfaceFactory;
 use Worldline\RecurringPayments\Api\SubscriptionRepositoryInterface;
 use Worldline\RecurringPayments\Model\SubscriptionEntity\ResourceModel\Subscription as SubscriptionResource;
 use Worldline\RecurringPayments\Model\SubscriptionEntity\ResourceModel\Subscription\Collection as SubscriptCollection;
@@ -22,16 +23,23 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
     private $subscriptionResource;
 
     /**
+     * @var SubscriptionInterfaceFactory
+     */
+    private $subscriptionFactory;
+
+    /**
      * @var array
      */
     private $wlSubscriptions = [];
 
     public function __construct(
         CollectionFactory $collectionFactory,
-        SubscriptionResource $subscriptionResource
+        SubscriptionResource $subscriptionResource,
+        SubscriptionInterfaceFactory $subscriptionFactory
     ) {
         $this->collectionFactory = $collectionFactory;
         $this->subscriptionResource = $subscriptionResource;
+        $this->subscriptionFactory = $subscriptionFactory;
     }
 
     public function save(SubscriptionInterface $subscription): SubscriptionInterface
@@ -52,5 +60,14 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
         }
 
         return $this->wlSubscriptions[$incrementId];
+    }
+
+    public function getBySubscriptionId(string $subscriptionId): SubscriptionInterface
+    {
+        $subscription = $this->subscriptionFactory->create();
+
+        $this->subscriptionResource->load($subscription, $subscriptionId, SubscriptionInterface::SUBSCRIPTION_ID);
+
+        return $subscription;
     }
 }

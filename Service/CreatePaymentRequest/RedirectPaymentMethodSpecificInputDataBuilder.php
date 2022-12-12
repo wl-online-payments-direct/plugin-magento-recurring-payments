@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Worldline\RecurringPayments\Service\Creator\Request;
+namespace Worldline\RecurringPayments\Service\CreatePaymentRequest;
 
 use Magento\Quote\Api\Data\CartInterface;
 use OnlinePayments\Sdk\Domain\RedirectPaymentMethodSpecificInput;
@@ -28,6 +28,7 @@ class RedirectPaymentMethodSpecificInputDataBuilder
         /** @var RedirectPaymentMethodSpecificInput $redirectPaymentMethodSpecificInput */
         $redirectPaymentMethodSpecificInput = $this->redirectPaymentMethodSpecificInputFactory->create();
         $redirectPaymentMethodSpecificInput->setToken($publicToken);
+        $redirectPaymentMethodSpecificInput->setRequiresApproval(false);
 
         return $redirectPaymentMethodSpecificInput;
     }

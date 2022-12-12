@@ -12,6 +12,9 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use OnlinePayments\Sdk\Merchant\Products\GetPaymentProductsParams;
 use Worldline\PaymentCore\Service\Payment\GetPaymentProductsRequestBuilder;
 
+/**
+ * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
+ */
 class AddRecurringParam implements ObserverInterface
 {
     /**

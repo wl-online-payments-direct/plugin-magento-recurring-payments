@@ -12,11 +12,58 @@
                 <amasty_subscriptions_display_name>Wordline Hosted Checkout</amasty_subscriptions_display_name>
                 <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
             </worldline_hosted_checkout>
-            <worldline_redirect_payment>
+            <worldline_redirect_payment_1>
                 <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
-                <amasty_subscriptions_display_name>Wordline Redirect Payment</amasty_subscriptions_display_name>
+                <amasty_subscriptions_display_name>Visa</amasty_subscriptions_display_name>
                 <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
-            </worldline_redirect_payment>
+            </worldline_redirect_payment_1>
+            <worldline_redirect_payment_2>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>American Express</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment_2>
+            <worldline_redirect_payment_3>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>Mastercard</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment_3>
+            <worldline_redirect_payment_117>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>Maestro</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment_117>
+            <worldline_redirect_payment_125>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>JCB</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment_125>
+            <worldline_redirect_payment_130>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>Carte Bancaire</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment_130>
+            <worldline_redirect_payment_132>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>Diners Club</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment_132>
+            <worldline_redirect_payment_302>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>Apple Pay</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment_302>
+            <worldline_redirect_payment_771>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>SEPA Direct Debit</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment_771>
         </payment>
+        <amasty_recurring_payments>
+            <worldline>
+                <attempts_to_withdraw>5</attempts_to_withdraw>
+                <frequency>1440</frequency>
+                <email_template>amasty_recurring_payments_worldline_email_template</email_template>
+            </worldline>
+        </amasty_recurring_payments>
     </default>
 </config>

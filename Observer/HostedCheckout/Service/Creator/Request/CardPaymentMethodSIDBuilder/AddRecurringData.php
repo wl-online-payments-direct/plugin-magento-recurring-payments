@@ -23,11 +23,11 @@ class AddRecurringData implements ObserverInterface
     }
 
     /**
-     * @see \Worldline\HostedCheckout\Service\Creator\Request\CardPaymentMethodSpecificInputDataBuilder::build()
-     * @see \Worldline\RedirectPayment\Service\Creator\Request\CardPaymentMethodSpecificInputDataBuilder::build()
-     *
      * @param Observer $observer
      * @return void
+     * @see \Worldline\HostedCheckout\Service\CreateHostedCheckoutRequest\CardPaymentMethodSpecificInputDataBuilder::build()
+     * @see \Worldline\RedirectPayment\Service\CreateHostedCheckoutRequest\CardPaymentMethodSpecificInputDataBuilder::build()
+     *
      */
     public function execute(Observer $observer)
     {
@@ -45,6 +45,7 @@ class AddRecurringData implements ObserverInterface
 
         $cardPaymentMethodSpecificInput->setToken(null);
         $cardPaymentMethodSpecificInput->setTokenize(true);
+        $cardPaymentMethodSpecificInput->setSkipAuthentication(false);
         $cardPaymentMethodSpecificInput->setAuthorizationMode(Config::AUTHORIZATION_MODE_SALE);
         $cardPaymentMethodSpecificInput->setUnscheduledCardOnFileSequenceIndicator('first');
         $cardPaymentMethodSpecificInput->setUnscheduledCardOnFileRequestor('cardholderInitiated');

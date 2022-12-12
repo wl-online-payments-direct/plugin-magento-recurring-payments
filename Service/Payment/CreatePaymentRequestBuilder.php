@@ -1,18 +1,18 @@
 <?php
 declare(strict_types=1);
 
-namespace Worldline\RecurringPayments\Service\Creator;
+namespace Worldline\RecurringPayments\Service\Payment;
 
 use Magento\Quote\Api\Data\CartInterface;
 use OnlinePayments\Sdk\Domain\CreatePaymentRequest;
 use OnlinePayments\Sdk\Domain\CreatePaymentRequestFactory;
 use Worldline\PaymentCore\Api\Data\PaymentProductsInterface;
 use Worldline\RecurringPayments\Model\Processor\Transaction\TransactionGeneratorPart;
-use Worldline\RecurringPayments\Service\Creator\Request\CardPaymentMethodSpecificInputDataBuilder;
-use Worldline\RecurringPayments\Service\Creator\Request\OrderDataBuilder;
-use Worldline\RecurringPayments\Service\Creator\Request\RedirectPaymentMethodSpecificInputDataBuilder;
+use Worldline\RecurringPayments\Service\CreatePaymentRequest\CardPaymentMethodSpecificInputDataBuilder;
+use Worldline\RecurringPayments\Service\CreatePaymentRequest\OrderDataBuilder;
+use Worldline\RecurringPayments\Service\CreatePaymentRequest\RedirectPaymentMethodSpecificInputDataBuilder;
 
-class RequestBuilder
+class CreatePaymentRequestBuilder
 {
     /**
      * @var OrderDataBuilder

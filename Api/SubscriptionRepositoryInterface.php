@@ -10,4 +10,6 @@ interface SubscriptionRepositoryInterface
     public function save(SubscriptionInterface $subscription): SubscriptionInterface;
 
     public function getByIncrementId(string $incrementId): SubscriptionInterface;
+
+    public function getBySubscriptionId(string $subscriptionId): SubscriptionInterface;
 }

@@ -8,7 +8,15 @@
             <argument name="methodValidators" xsi:type="array">
                 <item name="worldline_cc" xsi:type="object">Worldline\RecurringPayments\Model\CreditCard\Config\ConfigurationValidator</item>
                 <item name="worldline_hosted_checkout" xsi:type="object">Worldline\RecurringPayments\Model\HostedCheckout\Config\ConfigurationValidator</item>
-                <item name="worldline_redirect_payment" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_1" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_2" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_3" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_117" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_125" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_130" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_132" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_302" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_771" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
             </argument>
         </arguments>
     </type>
@@ -33,7 +41,15 @@
             <argument name="processors" xsi:type="array">
                 <item name="worldline_cc" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
                 <item name="worldline_hosted_checkout" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
-                <item name="worldline_redirect_payment" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_1" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_2" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_3" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_117" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_125" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_130" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_132" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_302" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_771" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
             </argument>
         </arguments>
     </type>
@@ -66,13 +82,83 @@
             <argument name="processors" xsi:type="array">
                 <item name="worldline_cc" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
                 <item name="worldline_hosted_checkout" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
-                <item name="worldline_redirect_payment" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_1" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_2" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_3" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_117" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_125" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_130" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_132" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_302" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_771" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- handle subscriptions cancel -->
+    <type name="Amasty\RecurringPayments\Model\Subscription\Operation\SubscriptionCancelOperation">
+        <arguments>
+            <argument name="cancelHandlers" xsi:type="array">
+                <item name="worldline_cc" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_hosted_checkout" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_1" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_2" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_3" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_117" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_125" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_130" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_132" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_302" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_771" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Retry to withdraw the money in case if a failed payment -->
+    <type name="Worldline\RecurringPayments\Plugin\Amasty\RecurringPayments\Model\Repository\ScheduleRepository\CreateNewSchedule">
+        <arguments>
+            <argument name="paymentMethods" xsi:type="array">
+                <item name="worldline_cc" xsi:type="string">worldline_cc</item>
+                <item name="worldline_hosted_checkout" xsi:type="string">worldline_hosted_checkout</item>
+                <item name="worldline_redirect_payment_1" xsi:type="string">worldline_redirect_payment_1</item>
+                <item name="worldline_redirect_payment_2" xsi:type="string">worldline_redirect_payment_2</item>
+                <item name="worldline_redirect_payment_3" xsi:type="string">worldline_redirect_payment_3</item>
+                <item name="worldline_redirect_payment_117" xsi:type="string">worldline_redirect_payment_117</item>
+                <item name="worldline_redirect_payment_125" xsi:type="string">worldline_redirect_payment_125</item>
+                <item name="worldline_redirect_payment_130" xsi:type="string">worldline_redirect_payment_130</item>
+                <item name="worldline_redirect_payment_132" xsi:type="string">worldline_redirect_payment_132y</item>
+                <item name="worldline_redirect_payment_302" xsi:type="string">worldline_redirect_payment_302</item>
+                <item name="worldline_redirect_payment_771" xsi:type="string">worldline_redirect_payment_771</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Worldline\RecurringPayments\Plugin\Amasty\RecurringPayments\Model\Repository\ScheduleRepository\ResetFailedSchedules">
+        <arguments>
+            <argument name="paymentMethods" xsi:type="array">
+                <item name="worldline_cc" xsi:type="string">worldline_cc</item>
+                <item name="worldline_hosted_checkout" xsi:type="string">worldline_hosted_checkout</item>
+                <item name="worldline_redirect_payment_1" xsi:type="string">worldline_redirect_payment_1</item>
+                <item name="worldline_redirect_payment_2" xsi:type="string">worldline_redirect_payment_2</item>
+                <item name="worldline_redirect_payment_3" xsi:type="string">worldline_redirect_payment_3</item>
+                <item name="worldline_redirect_payment_117" xsi:type="string">worldline_redirect_payment_117</item>
+                <item name="worldline_redirect_payment_125" xsi:type="string">worldline_redirect_payment_125</item>
+                <item name="worldline_redirect_payment_130" xsi:type="string">worldline_redirect_payment_130</item>
+                <item name="worldline_redirect_payment_132" xsi:type="string">worldline_redirect_payment_132y</item>
+                <item name="worldline_redirect_payment_302" xsi:type="string">worldline_redirect_payment_302</item>
+                <item name="worldline_redirect_payment_771" xsi:type="string">worldline_redirect_payment_771</item>
             </argument>
         </arguments>
     </type>
 
     <type name="Magento\Vault\Model\PaymentMethodList">
-        <plugin name="RecurringPayments::HideVault"
+        <plugin name="Worldline_RecurringPayments::HideVault"
                 type="Worldline\RecurringPayments\Plugin\Vault\Model\PaymentMethodList\HideVault"/>
+    </type>
+    <type name="Amasty\RecurringPayments\Model\Repository\ScheduleRepository">
+        <plugin name="Worldline_RecurringPayments::CreateNewSchedule"
+                type="Worldline\RecurringPayments\Plugin\Amasty\RecurringPayments\Model\Repository\ScheduleRepository\CreateNewSchedule"/>
+        <plugin name="Worldline_RecurringPayments::ResetFailedSchedules"
+                type="Worldline\RecurringPayments\Plugin\Amasty\RecurringPayments\Model\Repository\ScheduleRepository\ResetFailedSchedules"/>
     </type>
 </config>

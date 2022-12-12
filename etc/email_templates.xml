@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="amasty_recurring_payments_worldline_email_template"
+              label="Payment failed for Subscription"
+              file="failed.html"
+              type="html"
+              module="Worldline_RecurringPayments"
+              area="frontend"/>
+</config>

@@ -8,7 +8,7 @@ use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
 use Magento\Quote\Api\Data\CartInterface;
 use OnlinePayments\Sdk\Domain\RedirectPaymentMethodSpecificInput;
-use Worldline\RedirectPayment\Service\Creator\Request\RedirectPaymentMethodSpecificInputDataBuilder;
+use Worldline\RedirectPayment\Service\CreateHostedCheckoutRequest\RedirectPaymentMethodSpecificInputDataBuilder;
 
 class AddRecurringData implements ObserverInterface
 {
@@ -23,10 +23,10 @@ class AddRecurringData implements ObserverInterface
     }
 
     /**
-     * @see \Worldline\RedirectPayment\Service\Creator\Request\RedirectPaymentMethodSpecificInputDataBuilder::build()
-     *
      * @param Observer $observer
      * @return void
+     * @see \Worldline\RedirectPayment\Service\CreateHostedCheckoutRequest\RedirectPaymentMethodSpecificInputDataBuilder::build()
+     *
      */
     public function execute(Observer $observer)
     {
@@ -46,5 +46,6 @@ class AddRecurringData implements ObserverInterface
         }
 
         $redirectPaymentMethodSpecificInput->setTokenize(true);
+        $redirectPaymentMethodSpecificInput->setRequiresApproval(false);
     }
 }
