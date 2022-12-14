@@ -4,6 +4,9 @@
 
 Change log:
 
+1.2.1
+- Support the 1.3.1 version of Redirect Payments (single payment button) 
+
 1.2.0
 - Add retry mechanism configuration to withdraw the money in case a payment has failed
 - Token deletion when a subscription is canceled
