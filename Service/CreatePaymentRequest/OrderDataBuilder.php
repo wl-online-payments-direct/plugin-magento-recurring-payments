@@ -6,8 +6,8 @@ namespace Worldline\RecurringPayments\Service\CreatePaymentRequest;
 use Magento\Quote\Api\Data\CartInterface;
 use OnlinePayments\Sdk\Domain\Order;
 use OnlinePayments\Sdk\Domain\OrderFactory;
-use Worldline\CreditCard\Service\CreatePaymentRequest\Order\AmountDataBuilder;
-use Worldline\CreditCard\Service\CreatePaymentRequest\Order\ReferenceDataBuilder;
+use Worldline\PaymentCore\Service\CreateRequest\Order\AmountDataBuilder;
+use Worldline\PaymentCore\Service\CreateRequest\Order\ReferenceDataBuilder;
 
 class OrderDataBuilder
 {
