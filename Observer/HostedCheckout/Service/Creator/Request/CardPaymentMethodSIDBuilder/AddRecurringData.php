@@ -25,8 +25,8 @@ class AddRecurringData implements ObserverInterface
     /**
      * @param Observer $observer
      * @return void
-     * @see \Worldline\HostedCheckout\Service\CreateHostedCheckoutRequest\CardPaymentMethodSpecificInputDataBuilder::build()
-     * @see \Worldline\RedirectPayment\Service\CreateHostedCheckoutRequest\CardPaymentMethodSpecificInputDataBuilder::build()
+     * @see \Worldline\HostedCheckout\Service\CreateHostedCheckoutRequest\CardPaymentMethodSIDBuilder::build()
+     * @see \Worldline\RedirectPayment\Service\CreateHostedCheckoutRequest\CardPaymentMethodSIDBuilder::build()
      *
      */
     public function execute(Observer $observer)

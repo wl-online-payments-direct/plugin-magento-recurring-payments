@@ -13,7 +13,7 @@ use Magento\Sales\Api\OrderRepositoryInterface;
 use Magento\Store\Model\App\Emulation;
 use Magento\Store\Model\StoreManagerInterface;
 use Worldline\RecurringPayments\Model\Processor\Transaction\TransactionGeneratorPart;
-use Worldline\RecurringPayments\Model\Processor\Transaction\TransactionStatusValidatorPart;
+use Worldline\RecurringPayments\Model\Processor\Transaction\TransactionPartHandler;
 
 class HandleSubscriptionCharge implements HandleSubscriptionInterface
 {
@@ -48,9 +48,9 @@ class HandleSubscriptionCharge implements HandleSubscriptionInterface
     private $handleOrderContextFactory;
 
     /**
-     * @var TransactionStatusValidatorPart
+     * @var TransactionPartHandler
      */
-    private $transactionStatusValidatorPart;
+    private $transactionPartHandler;
 
     public function __construct(
         Emulation $emulation,
@@ -59,7 +59,7 @@ class HandleSubscriptionCharge implements HandleSubscriptionInterface
         CompositeHandlerFactory $compositeHandlerFactory,
         TransactionGeneratorPart $transactionGeneratorPart,
         HandleOrderContextFactory $handleOrderContextFactory,
-        TransactionStatusValidatorPart $transactionStatusValidatorPart
+        TransactionPartHandler $transactionPartHandler
     ) {
         $this->emulation = $emulation;
         $this->storeManager = $storeManager;
@@ -67,7 +67,7 @@ class HandleSubscriptionCharge implements HandleSubscriptionInterface
         $this->compositeHandlerFactory = $compositeHandlerFactory;
         $this->transactionGeneratorPart = $transactionGeneratorPart;
         $this->handleOrderContextFactory = $handleOrderContextFactory;
-        $this->transactionStatusValidatorPart = $transactionStatusValidatorPart;
+        $this->transactionPartHandler = $transactionPartHandler;
     }
 
     public function process(SubscriptionInterface $subscription): void
@@ -84,7 +84,7 @@ class HandleSubscriptionCharge implements HandleSubscriptionInterface
         $compositeHandler = $this->compositeHandlerFactory->create();
         $compositeHandler->addPart($this->transactionGeneratorPart, 'worldline_core_transaction', 'quote');
         $compositeHandler->addPart(
-            $this->transactionStatusValidatorPart,
+            $this->transactionPartHandler,
             'worldline_core_transaction_validate',
             'worldline_core_transaction'
         );

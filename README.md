@@ -4,6 +4,9 @@
 
 Change log:
 
+1.2.2
+- General code improvements and bug fixes.
+
 1.2.1
 - Support the 1.3.1 version of Redirect Payments (single payment button) 
 
