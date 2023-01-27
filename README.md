@@ -12,7 +12,10 @@ This addon includes the following worldline solutions:
 - [hosted checkout](https://github.com/wl-online-payments-direct/plugin-magento-hostedcheckout)
 - [redirect payments (single payment buttons)](https://github.com/wl-online-payments-direct/plugin-magento-redirect-payments)
 
-Change log:
+### Change log:
+
+#### 1.2.4
+- Rise core version
 
 #### 1.2.3
 - Add uninstall script.
