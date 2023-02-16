@@ -6,6 +6,7 @@ namespace Worldline\RecurringPayments\Observer\HostedCheckout\Service\Creator\Re
 use Amasty\RecurringPayments\Model\QuoteValidate;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
+use Magento\Framework\UrlInterface;
 use Magento\Quote\Api\Data\CartInterface;
 use OnlinePayments\Sdk\Domain\HostedCheckoutSpecificInput;
 use OnlinePayments\Sdk\Domain\PaymentProductFilter;
@@ -14,9 +15,22 @@ use OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckout;
 use OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckoutFactory;
 use Worldline\HostedCheckout\Service\CreateHostedCheckoutRequest\SpecificInputDataBuilder;
 use Worldline\PaymentCore\Ui\PaymentProductsProvider;
+use Worldline\RecurringPayments\Model\QuoteContext;
 
 class AddRecurringData implements ObserverInterface
 {
+    public const RETURN_URL = 'wl_recurring/returns/returnUrl';
+
+    /**
+     * @var UrlInterface
+     */
+    private $urlBuilder;
+
+    /**
+     * @var QuoteContext
+     */
+    private $quoteContext;
+
     /**
      * @var QuoteValidate
      */
@@ -38,11 +52,15 @@ class AddRecurringData implements ObserverInterface
     private $paymentProductFiltersHCFactory;
 
     public function __construct(
+        UrlInterface $urlBuilder,
+        QuoteContext$quoteContext,
         QuoteValidate $quoteValidate,
         PaymentProductsProvider $payProductsProvider,
         PaymentProductFilterFactory $paymentProductFilterFactory,
         PaymentProductFiltersHostedCheckoutFactory $paymentProductFiltersHCFactory
     ) {
+        $this->urlBuilder = $urlBuilder;
+        $this->quoteContext = $quoteContext;
         $this->quoteValidate = $quoteValidate;
         $this->payProductsProvider = $payProductsProvider;
         $this->paymentProductFilterFactory = $paymentProductFilterFactory;
@@ -69,6 +87,8 @@ class AddRecurringData implements ObserverInterface
             return;
         }
 
+        $this->replaceReturnUrl($quote, $hostedCheckoutSpecificInput);
+
         $payProducts = $this->payProductsProvider->getPaymentProducts((int)$quote->getStoreId());
 
         /** @var PaymentProductFilter $paymentProductFilter */
@@ -80,5 +100,19 @@ class AddRecurringData implements ObserverInterface
         $paymentProductFiltersHC->setRestrictTo($paymentProductFilter);
 
         $hostedCheckoutSpecificInput->setPaymentProductFilters($paymentProductFiltersHC);
+    }
+
+    private function replaceReturnUrl(
+        CartInterface $quote,
+        HostedCheckoutSpecificInput $hostedCheckoutSpecificInput
+    ): void {
+        $quoteFromContext = $this->quoteContext->getQuote();
+        if ($quote->getId() == $quoteFromContext->getId() && $quoteFromContext->getRenewTokenProcessFlag()) {
+            $returnUrl = $this->urlBuilder->getUrl(
+                self::RETURN_URL,
+                ['subscription_id' => $quoteFromContext->getSubscriptionId()]
+            );
+            $hostedCheckoutSpecificInput->setReturnUrl($returnUrl);
+        }
     }
 }

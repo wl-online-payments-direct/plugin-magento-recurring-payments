@@ -1,5 +1,4 @@
 <?php
-
 declare(strict_types=1);
 
 namespace Worldline\RecurringPayments\Model\Processor\Transaction;
@@ -8,6 +7,7 @@ use Amasty\RecurringPayments\Model\Subscription\HandleOrder\HandleOrderContext;
 use Amasty\RecurringPayments\Model\Subscription\HandleOrder\HandlerPartInterface;
 use InvalidArgumentException;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\Quote\Api\CartRepositoryInterface;
 use Magento\Quote\Api\Data\CartInterface;
 use OnlinePayments\Sdk\Domain\PaymentResponse;
 use Worldline\CreditCard\Gateway\Request\PaymentDataBuilder;
@@ -29,6 +29,11 @@ class TransactionPartHandler implements HandlerPartInterface
     private $statusCodeValidator;
 
     /**
+     * @var CartRepositoryInterface
+     */
+    private $quoteRepository;
+
+    /**
      * @var PaymentDataManagerInterface
      */
     private $paymentDataManager;
@@ -40,11 +45,13 @@ class TransactionPartHandler implements HandlerPartInterface
     public function __construct(
         GetPaymentServiceInterface $getPaymentService,
         StatusCodeValidator $statusCodeValidator,
+        CartRepositoryInterface $quoteRepository,
         PaymentDataManagerInterface $paymentDataManager,
         CanPlaceOrderContextInterfaceFactory $canPlaceOrderContextFactory
     ) {
         $this->getPaymentService = $getPaymentService;
         $this->statusCodeValidator = $statusCodeValidator;
+        $this->quoteRepository = $quoteRepository;
         $this->paymentDataManager = $paymentDataManager;
         $this->canPlaceOrderContextFactory = $canPlaceOrderContextFactory;
     }
@@ -67,6 +74,7 @@ class TransactionPartHandler implements HandlerPartInterface
 
         $paymentResponse = $this->getPaymentService->execute($paymentId, (int)$quote->getStoreId());
         if ($this->canPlaceOrder($paymentResponse, $quote)) {
+            $this->quoteRepository->save($quote);
             $this->paymentDataManager->savePaymentData($paymentResponse);
             return true;
         }

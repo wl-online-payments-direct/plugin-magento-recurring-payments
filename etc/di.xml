@@ -152,13 +152,16 @@
     </type>
 
     <type name="Magento\Vault\Model\PaymentMethodList">
-        <plugin name="Worldline_RecurringPayments::HideVault"
-                type="Worldline\RecurringPayments\Plugin\Vault\Model\PaymentMethodList\HideVault"/>
+        <plugin name="Worldline_RecurringPayments::hide_vault"
+                type="Worldline\RecurringPayments\Plugin\Magento\Vault\Model\PaymentMethodList\HideVault"/>
     </type>
     <type name="Amasty\RecurringPayments\Model\Repository\ScheduleRepository">
-        <plugin name="Worldline_RecurringPayments::CreateNewSchedule"
+        <plugin name="Worldline_RecurringPayments::create_new_schedule"
                 type="Worldline\RecurringPayments\Plugin\Amasty\RecurringPayments\Model\Repository\ScheduleRepository\CreateNewSchedule"/>
-        <plugin name="Worldline_RecurringPayments::ResetFailedSchedules"
+        <plugin name="Worldline_RecurringPayments::reset_failed_schedules"
                 type="Worldline\RecurringPayments\Plugin\Amasty\RecurringPayments\Model\Repository\ScheduleRepository\ResetFailedSchedules"/>
+    </type>
+    <type name="Magento\Quote\Api\CartTotalRepositoryInterface">
+        <plugin name="Worldline_RecurringPayments::check_pay_limits" type="Worldline\RecurringPayments\Plugin\Magento\Model\Quote\Cart\CartTotalRepository\CheckPayLimits"/>
     </type>
 </config>

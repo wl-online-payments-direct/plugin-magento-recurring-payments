@@ -1,0 +1,8 @@
+.-wl-blocked .billing-address-same-as-shipping-block,
+.-wl-blocked .actions-toolbar button[type="submit"] {
+    pointer-events: none;
+}
+
+.-wl-blocked .actions-toolbar button[type="submit"] {
+    opacity: .5;
+}

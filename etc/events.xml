@@ -20,6 +20,12 @@
                   instance="Worldline\RecurringPayments\Observer\HostedCheckout\Service\Creator\Request\HostedCheckoutSIDBuilder\AddRecurringData" />
     </event>
 
+    <!-- nullify order grand total in hosted checkout order data builder -->
+    <event name="worldline_hosted_checkout_order_data_builder">
+        <observer name="worldline_recurring_payments_hc_nullify_order_grand_total"
+                  instance="Worldline\RecurringPayments\Observer\HostedCheckout\Service\CreateHostedCheckoutRequest\OrderDataBuilder\NullifyGrandTotal" />
+    </event>
+
     <!-- add recurring data to redirect payment method specific input -->
     <event name="worldline_redirect_payment_redirect_payment_method_specific_input_builder">
         <observer name="worldline_recurring_payments_rp_add_data_to_redirect_payment_method_specific_input"
