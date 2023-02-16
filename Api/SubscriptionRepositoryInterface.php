@@ -12,4 +12,6 @@ interface SubscriptionRepositoryInterface
     public function getByIncrementId(string $incrementId): SubscriptionInterface;
 
     public function getBySubscriptionId(string $subscriptionId): SubscriptionInterface;
+
+    public function isReusableToken(string $token): bool;
 }

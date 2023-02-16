@@ -63,6 +63,8 @@
                 <attempts_to_withdraw>5</attempts_to_withdraw>
                 <frequency>1440</frequency>
                 <email_template>amasty_recurring_payments_worldline_email_template</email_template>
+                <limits_notification_message>We impose a limit of {{amount-currency}} per calendar month on the amount of funds you can be charged through recurring payments. Can you please adjust the number of goods you would like to subscribe to in order to make the total amount less/equal to {{amount-currency}}? Thank you.</limits_notification_message>
+                <limit_base_amount>1000</limit_base_amount>
             </worldline>
         </amasty_recurring_payments>
     </default>

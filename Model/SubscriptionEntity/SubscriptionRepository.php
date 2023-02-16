@@ -70,4 +70,20 @@ class SubscriptionRepository implements SubscriptionRepositoryInterface
 
         return $subscription;
     }
+
+    /**
+     * The token can be used for other subscriptions
+     *
+     * @param string $token
+     * @return bool
+     */
+    public function isReusableToken(string $token): bool
+    {
+        /** @var SubscriptCollection $collection */
+        $collection = $this->collectionFactory->create();
+        $collection->addFieldToFilter(SubscriptionInterface::TOKEN, ['eq' => $token]);
+        $collection->getSelect()->limit(1);
+
+        return (bool)$collection->count();
+    }
 }

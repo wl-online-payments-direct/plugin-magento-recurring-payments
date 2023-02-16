@@ -9,13 +9,15 @@ use Amasty\RecurringPayments\Model\Repository\ScheduleRepository;
 use Amasty\RecurringPayments\Model\Subscription\Operation\SubscriptionCancelOperation;
 use Magento\Framework\Exception\NoSuchEntityException;
 use Amasty\RecurringPayments\Model\Subscription\Email\EmailNotifier;
+use Magento\Framework\UrlInterface;
 use Worldline\RecurringPayments\Model\ConfigProvider;
 use Worldline\RecurringPayments\Model\ResourceModel\ScheduleProvider;
 use Worldline\RecurringPayments\Model\ScheduleManager;
 
 class CreateNewSchedule
 {
-    public const FIRST_FAIL = 1;
+    public const RENEW_URL_KEY = 'renew_url';
+    public const RENEW_TOKEN_URL = 'wl_recurring/payment/renewToken';
 
     /**
      * @var EmailNotifier
@@ -52,6 +54,11 @@ class CreateNewSchedule
      */
     private $paymentMethods;
 
+    /**
+     * @var UrlInterface
+     */
+    private $urlBuilder;
+
     public function __construct(
         EmailNotifier $emailNotifier,
         ConfigProvider $configProvider,
@@ -59,6 +66,7 @@ class CreateNewSchedule
         ScheduleProvider $scheduleProvider,
         RepositoryInterface $subscriptionRepository,
         SubscriptionCancelOperation $subscriptionCancelOperation,
+        UrlInterface $urlBuilder,
         array $paymentMethods = []
     ) {
         $this->emailNotifier = $emailNotifier;
@@ -68,6 +76,7 @@ class CreateNewSchedule
         $this->subscriptionRepository = $subscriptionRepository;
         $this->subscriptionCancelOperation = $subscriptionCancelOperation;
         $this->paymentMethods = $paymentMethods;
+        $this->urlBuilder = $urlBuilder;
     }
 
     /**
@@ -98,17 +107,24 @@ class CreateNewSchedule
         }
 
         $storeId = (int)$subscription->getStoreId();
+
+        $this->emailNotifier->sendEmail(
+            $subscription,
+            $this->configProvider->getEmailTemplate($storeId),
+            [
+                ScheduleInterface::SUBSCRIPTION_ID => $subscriptionId,
+                self::RENEW_URL_KEY => $this->urlBuilder->getUrl(
+                    self::RENEW_TOKEN_URL,
+                    [
+                        '_scope' => $storeId,
+                        ScheduleInterface::SUBSCRIPTION_ID => $subscriptionId
+                    ]
+                )
+            ]
+        );
+
         $failedSchedules = $this->scheduleProvider->getFailedSchedules($subscriptionId);
         $countOfFailedSchedules = count($failedSchedules);
-
-        if ($countOfFailedSchedules === self::FIRST_FAIL) {
-            $this->emailNotifier->sendEmail(
-                $subscription,
-                $this->configProvider->getEmailTemplate($storeId),
-                [ScheduleInterface::SUBSCRIPTION_ID => $subscriptionId]
-            );
-        }
-
         if ($countOfFailedSchedules <= $this->configProvider->getAttemptsToWithdraw($storeId)) {
             $this->scheduleManager->createNewSchedule($subscriptionId, $storeId);
             return;

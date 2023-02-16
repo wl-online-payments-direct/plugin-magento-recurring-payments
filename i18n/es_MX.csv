@@ -21,4 +21,11 @@
 "Your subscription has been canceled.","Su suscripción ha sido cancelada."
 "Subscription Purchased","Suscripción comprada"
 "Subscription Cancelled","Suscripción cancelada"
-
+"Renew subscription","Renovar la suscripción"
+"Subscription has been successfully renewed","La suscripción ha sido renovada con éxito"
+"<a href=""%1"">Return to the cart page.</a>","<a href=""%1"">Volver a la página del carrito.</a>"
+"Please use the tag {{amount-currency}} in order to display within your explanatory text the limit allowed for recurring payments.","Utilice la etiqueta {{amount-currency}} para mostrar en su texto explicativo el límite permitido para pagos recurrentes."
+"Email Template","Plantilla de correo electrónico"
+"Notify Customers on WorldLine Pay Limits","Notificar a las clientes sobre los límites de pago de WorldLine"
+"Notification Message","Mensaje de notificación"
+"Limit Amount in Base Currency","Importe límite en moneda base"

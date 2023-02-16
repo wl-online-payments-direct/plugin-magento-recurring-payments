@@ -17,6 +17,24 @@
                     <label>Email Template</label>
                     <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
                 </field>
+                <field id="limits_notification_enabled" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Notify Customers on WorldLine Pay Limits</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="limits_notification_message" type="textarea" translate="label comment" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Notification Message</label>
+                    <comment><![CDATA[Please use the tag {{amount-currency}} in order to display within your explanatory text the limit allowed for recurring payments.]]></comment>
+                    <depends>
+                        <field id="limits_notification_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="limit_base_amount" type="text" translate="label" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Limit Amount in Base Currency</label>
+                    <depends>
+                        <field id="limits_notification_enabled">1</field>
+                    </depends>
+                    <validate>required-entry validate-number validate-greater-than-zero</validate>
+                </field>
             </group>
         </section>
     </system>
