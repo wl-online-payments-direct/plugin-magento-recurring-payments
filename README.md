@@ -21,6 +21,9 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.3.1
+- Rise core modules versions.
+
 #### 1.3.0
 - Add a functionality to limit the amounts purchased for the Subscriptions & Recurring payments.
 - Add a link in the subscription emails to renew the token when it is expired or payment failed.
