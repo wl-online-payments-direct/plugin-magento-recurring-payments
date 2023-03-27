@@ -8,13 +8,12 @@ use Amasty\RecurringPayments\Model\Subscription\HandleOrder\HandlerPartInterface
 use InvalidArgumentException;
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Quote\Api\CartRepositoryInterface;
-use Magento\Quote\Api\Data\CartInterface;
-use OnlinePayments\Sdk\Domain\PaymentResponse;
 use Worldline\CreditCard\Gateway\Request\PaymentDataBuilder;
-use Worldline\PaymentCore\Api\Data\CanPlaceOrderContextInterfaceFactory;
+use Worldline\PaymentCore\Api\Payment\PaymentIdFormatterInterface;
 use Worldline\PaymentCore\Api\PaymentDataManagerInterface;
 use Worldline\PaymentCore\Api\Service\Payment\GetPaymentServiceInterface;
-use Worldline\PaymentCore\Model\Order\ValidatorPool\StatusCodeValidator;
+use Worldline\PaymentCore\Api\SurchargingQuoteManagerInterface;
+use Worldline\PaymentCore\Model\Order\CanPlaceOrderContextManager;
 
 class TransactionPartHandler implements HandlerPartInterface
 {
@@ -24,36 +23,44 @@ class TransactionPartHandler implements HandlerPartInterface
     private $getPaymentService;
 
     /**
-     * @var StatusCodeValidator
-     */
-    private $statusCodeValidator;
-
-    /**
      * @var CartRepositoryInterface
      */
     private $quoteRepository;
 
     /**
+     * @var PaymentIdFormatterInterface
+     */
+    private $paymentIdFormatter;
+
+    /**
      * @var PaymentDataManagerInterface
      */
     private $paymentDataManager;
+
     /**
-     * @var CanPlaceOrderContextInterfaceFactory
+     * @var CanPlaceOrderContextManager
      */
-    private $canPlaceOrderContextFactory;
+    private $canPlaceOrderContextManager;
+
+    /**
+     * @var SurchargingQuoteManagerInterface
+     */
+    private $surchargingQuoteManager;
 
     public function __construct(
         GetPaymentServiceInterface $getPaymentService,
-        StatusCodeValidator $statusCodeValidator,
         CartRepositoryInterface $quoteRepository,
+        PaymentIdFormatterInterface $paymentIdFormatter,
         PaymentDataManagerInterface $paymentDataManager,
-        CanPlaceOrderContextInterfaceFactory $canPlaceOrderContextFactory
+        CanPlaceOrderContextManager $canPlaceOrderContextManager,
+        SurchargingQuoteManagerInterface $surchargingQuoteManager
     ) {
         $this->getPaymentService = $getPaymentService;
-        $this->statusCodeValidator = $statusCodeValidator;
         $this->quoteRepository = $quoteRepository;
+        $this->paymentIdFormatter = $paymentIdFormatter;
         $this->paymentDataManager = $paymentDataManager;
-        $this->canPlaceOrderContextFactory = $canPlaceOrderContextFactory;
+        $this->canPlaceOrderContextManager = $canPlaceOrderContextManager;
+        $this->surchargingQuoteManager = $surchargingQuoteManager;
     }
 
     /**
@@ -67,13 +74,22 @@ class TransactionPartHandler implements HandlerPartInterface
     {
         $quote = $context->getQuote();
         $payment = $quote->getPayment();
+        $payment->setMethod($context->getSubscription()->getPaymentMethod());
         $paymentId = (string)$payment->getAdditionalInformation(PaymentDataBuilder::PAYMENT_ID);
         if (!$paymentId) {
             return false;
         }
 
+        $paymentId = $this->paymentIdFormatter->validateAndFormat($paymentId, true);
         $paymentResponse = $this->getPaymentService->execute($paymentId, (int)$quote->getStoreId());
-        if ($this->canPlaceOrder($paymentResponse, $quote)) {
+
+        if ($surchargeOutput = $paymentResponse->getPaymentOutput()->getSurchargeSpecificOutput()) {
+            $this->surchargingQuoteManager->formatAndSaveSurchargingQuote($quote, $surchargeOutput);
+        }
+
+        $statusCode = (int)$paymentResponse->getStatusOutput()->getStatusCode();
+        $context = $this->canPlaceOrderContextManager->createContext($quote, $statusCode);
+        if ($this->canPlaceOrderContextManager->canPlaceOrder($context)) {
             $this->quoteRepository->save($quote);
             $this->paymentDataManager->savePaymentData($paymentResponse);
             return true;
@@ -90,24 +106,6 @@ class TransactionPartHandler implements HandlerPartInterface
 
         if (!$context->getQuote()) {
             throw new InvalidArgumentException('No quote in context');
-        }
-    }
-
-    private function canPlaceOrder(PaymentResponse $paymentResponse, CartInterface $quote): bool
-    {
-        $statusCode = (int)$paymentResponse->getStatusOutput()->getStatusCode();
-        $paymentId = (string)$quote->getPayment()->getAdditionalInformation(PaymentDataBuilder::PAYMENT_ID);
-
-        $context = $this->canPlaceOrderContextFactory->create();
-        $context->setStatusCode($statusCode);
-        $context->setWorldlinePaymentId($paymentId);
-        $context->setStoreId($quote->getStoreId());
-
-        try {
-            $this->statusCodeValidator->validate($context);
-            return true;
-        } catch (LocalizedException $e) {
-            return false;
         }
     }
 }

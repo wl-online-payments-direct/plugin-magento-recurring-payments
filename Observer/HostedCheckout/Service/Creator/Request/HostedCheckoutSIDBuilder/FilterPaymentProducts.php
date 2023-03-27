@@ -14,10 +14,11 @@ use OnlinePayments\Sdk\Domain\PaymentProductFilterFactory;
 use OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckout;
 use OnlinePayments\Sdk\Domain\PaymentProductFiltersHostedCheckoutFactory;
 use Worldline\HostedCheckout\Service\CreateHostedCheckoutRequest\SpecificInputDataBuilder;
-use Worldline\PaymentCore\Ui\PaymentProductsProvider;
+use Worldline\PaymentCore\Api\Data\PaymentProductsDetailsInterface;
+use Worldline\PaymentCore\Api\Ui\PaymentProductsProviderInterface;
 use Worldline\RecurringPayments\Model\QuoteContext;
 
-class AddRecurringData implements ObserverInterface
+class FilterPaymentProducts implements ObserverInterface
 {
     public const RETURN_URL = 'wl_recurring/returns/returnUrl';
 
@@ -37,7 +38,7 @@ class AddRecurringData implements ObserverInterface
     private $quoteValidate;
 
     /**
-     * @var PaymentProductsProvider
+     * @var PaymentProductsProviderInterface
      */
     private $payProductsProvider;
 
@@ -55,7 +56,7 @@ class AddRecurringData implements ObserverInterface
         UrlInterface $urlBuilder,
         QuoteContext$quoteContext,
         QuoteValidate $quoteValidate,
-        PaymentProductsProvider $payProductsProvider,
+        PaymentProductsProviderInterface $payProductsProvider,
         PaymentProductFilterFactory $paymentProductFilterFactory,
         PaymentProductFiltersHostedCheckoutFactory $paymentProductFiltersHCFactory
     ) {
@@ -90,6 +91,9 @@ class AddRecurringData implements ObserverInterface
         $this->replaceReturnUrl($quote, $hostedCheckoutSpecificInput);
 
         $payProducts = $this->payProductsProvider->getPaymentProducts((int)$quote->getStoreId());
+        if ((float)$quote->getGrandTotal() < 0.00001) {
+            unset($payProducts[PaymentProductsDetailsInterface::SEPA_DIRECT_DEBIT_PRODUCT_ID]);
+        }
 
         /** @var PaymentProductFilter $paymentProductFilter */
         $paymentProductFilter = $this->paymentProductFilterFactory->create();

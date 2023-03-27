@@ -9,12 +9,19 @@ use Amasty\RecurringPayments\Model\Config\Source\Status;
 use Amasty\RecurringPayments\Model\Subscription\HandleOrder\HandleOrderContext;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Sales\Api\Data\OrderInterface;
+use OnlinePayments\Sdk\Domain\PaymentOutput;
 use Worldline\CreditCard\Gateway\Request\PaymentDataBuilder;
+use Worldline\PaymentCore\Api\AmountFormatterInterface;
 use Worldline\RecurringPayments\Api\SubscriptionRepositoryInterface;
 
 class TransactionGeneratorManager
 {
     public const PAYMENT_PRODUCT_ID = 'payment_product_id';
+
+    /**
+     * @var AmountFormatterInterface
+     */
+    private $amountFormatter;
 
     /**
      * @var SubscriptionRepositoryInterface
@@ -27,9 +34,11 @@ class TransactionGeneratorManager
     private $recurringTransactionGenerator;
 
     public function __construct(
+        AmountFormatterInterface $amountFormatter,
         SubscriptionRepositoryInterface $wlSubscriptionRepository,
         RecurringTransactionGeneratorInterface $recurringTransactionGenerator
     ) {
+        $this->amountFormatter = $amountFormatter;
         $this->wlSubscriptionRepository = $wlSubscriptionRepository;
         $this->recurringTransactionGenerator = $recurringTransactionGenerator;
     }
@@ -57,10 +66,16 @@ class TransactionGeneratorManager
     public function generateRecurringTransaction(
         HandleOrderContext $context,
         OrderInterface $order,
+        PaymentOutput $paymentOutput,
         string $transactionId
     ): TransactionInterface {
+        $transactionAmount = (int)$paymentOutput->getAcquiredAmount()->getAmount();
+        $transactionCurrency = $paymentOutput->getAcquiredAmount()->getCurrencyCode();
+
+        $amount = $this->amountFormatter->formatToFloat($transactionAmount, $transactionCurrency);
+
         return $this->recurringTransactionGenerator->generate(
-            (float)$context->getQuote()->getBaseGrandTotal(),
+            $amount,
             $order->getIncrementId(),
             $order->getOrderCurrencyCode(),
             $transactionId,

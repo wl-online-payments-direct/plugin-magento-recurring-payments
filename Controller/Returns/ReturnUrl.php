@@ -7,7 +7,8 @@ use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Framework\App\Action\HttpGetActionInterface;
 use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\View\Result\Page;
+use Magento\Framework\Controller\ResultInterface;
+use Magento\Framework\Exception\LocalizedException;
 use Worldline\RecurringPayments\Model\RenewToken\TokenReplacement;
 
 class ReturnUrl extends Action implements HttpGetActionInterface
@@ -23,13 +24,21 @@ class ReturnUrl extends Action implements HttpGetActionInterface
         $this->tokenReplacement = $tokenReplacement;
     }
 
-    public function execute(): Page
+    public function execute(): ResultInterface
     {
         $returnId = (string) $this->getRequest()->getParam('RETURNMAC');
         $subscriptionId = (string) $this->getRequest()->getParam('subscription_id');
         $hostedCheckoutId = (string) $this->getRequest()->getParam('hostedCheckoutId');
 
-        $this->tokenReplacement->replace($hostedCheckoutId, $returnId, $subscriptionId);
+        try {
+            $this->tokenReplacement->replace($hostedCheckoutId, $returnId, $subscriptionId);
+        } catch (LocalizedException $exception) {
+            $this->messageManager->addWarningMessage($exception->getMessage());
+
+            $result = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
+            $result->setPath('/');
+            return $result;
+        }
 
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
         $resultPage->getConfig()->getTitle()->prepend(__('Subscription has been successfully renewed'));

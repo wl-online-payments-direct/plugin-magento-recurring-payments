@@ -8,8 +8,9 @@ use Amasty\RecurringPayments\Model\Subscription\Email\EmailNotifier;
 use Amasty\RecurringPayments\Model\Subscription\HandleOrder\HandleOrderContext;
 use Amasty\RecurringPayments\Model\Subscription\HandleOrder\HandlerPartInterface;
 use Magento\Sales\Api\OrderRepositoryInterface;
-use Worldline\CreditCard\Api\Service\Payment\CreatePaymentServiceInterface;
 use Worldline\CreditCard\Gateway\Request\PaymentDataBuilder;
+use Worldline\PaymentCore\Api\Service\Payment\CreatePaymentServiceInterface;
+use Worldline\RecurringPayments\Model\QuoteContext;
 use Worldline\RecurringPayments\Service\Payment\CreatePaymentRequestBuilder;
 
 /**
@@ -17,8 +18,6 @@ use Worldline\RecurringPayments\Service\Payment\CreatePaymentRequestBuilder;
  */
 class TransactionGeneratorPart implements HandlerPartInterface
 {
-    public const PAYMENT_PRODUCT_ID = 'payment_product_id';
-
     /**
      * @var CreatePaymentRequestBuilder
      */
@@ -28,6 +27,11 @@ class TransactionGeneratorPart implements HandlerPartInterface
      * @var EmailNotifier
      */
     private $emailNotifier;
+
+    /**
+     * @var QuoteContext
+     */
+    private $wlQuoteContext;
 
     /**
      * @var AmRecurringConfig
@@ -52,6 +56,7 @@ class TransactionGeneratorPart implements HandlerPartInterface
     public function __construct(
         CreatePaymentRequestBuilder $createRequestBuilder,
         EmailNotifier $emailNotifier,
+        QuoteContext $wlQuoteContext,
         AmRecurringConfig $amRecurringConfig,
         OrderRepositoryInterface $orderRepository,
         CreatePaymentServiceInterface $createPaymentService,
@@ -59,6 +64,7 @@ class TransactionGeneratorPart implements HandlerPartInterface
     ) {
         $this->createRequestBuilder = $createRequestBuilder;
         $this->emailNotifier = $emailNotifier;
+        $this->wlQuoteContext = $wlQuoteContext;
         $this->amRecurringConfig = $amRecurringConfig;
         $this->orderRepository = $orderRepository;
         $this->createPaymentService = $createPaymentService;
@@ -68,6 +74,7 @@ class TransactionGeneratorPart implements HandlerPartInterface
     public function handlePartial(HandleOrderContext $context): bool
     {
         $quote = $context->getQuote();
+        $this->wlQuoteContext->setQuote($quote);
         $payment = $quote->getPayment();
         $storeId = (int)$quote->getStoreId();
         $subscription = $context->getSubscription();
@@ -85,8 +92,12 @@ class TransactionGeneratorPart implements HandlerPartInterface
         $transactionId = $response->getPayment()->getId();
         $payment->setAdditionalInformation(PaymentDataBuilder::PAYMENT_ID, $transactionId);
         $context->setTransactionId($transactionId);
-
-        $recurringTransaction = $this->generatorManager->generateRecurringTransaction($context, $order, $transactionId);
+        $recurringTransaction = $this->generatorManager->generateRecurringTransaction(
+            $context,
+            $order,
+            $response->getPayment()->getPaymentOutput(),
+            $transactionId
+        );
         $context->setRecurringTransaction($recurringTransaction);
 
         if ($this->amRecurringConfig->isNotifySubscriptionPurchased($storeId)) {

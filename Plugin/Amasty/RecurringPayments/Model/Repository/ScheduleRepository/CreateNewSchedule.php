@@ -11,6 +11,7 @@ use Magento\Framework\Exception\NoSuchEntityException;
 use Amasty\RecurringPayments\Model\Subscription\Email\EmailNotifier;
 use Magento\Framework\UrlInterface;
 use Worldline\RecurringPayments\Model\ConfigProvider;
+use Worldline\RecurringPayments\Model\QuoteDeactivator;
 use Worldline\RecurringPayments\Model\ResourceModel\ScheduleProvider;
 use Worldline\RecurringPayments\Model\ScheduleManager;
 
@@ -59,6 +60,11 @@ class CreateNewSchedule
      */
     private $urlBuilder;
 
+    /**
+     * @var QuoteDeactivator
+     */
+    private $quoteDeactivator;
+
     public function __construct(
         EmailNotifier $emailNotifier,
         ConfigProvider $configProvider,
@@ -67,6 +73,7 @@ class CreateNewSchedule
         RepositoryInterface $subscriptionRepository,
         SubscriptionCancelOperation $subscriptionCancelOperation,
         UrlInterface $urlBuilder,
+        QuoteDeactivator $quoteDeactivator,
         array $paymentMethods = []
     ) {
         $this->emailNotifier = $emailNotifier;
@@ -77,6 +84,7 @@ class CreateNewSchedule
         $this->subscriptionCancelOperation = $subscriptionCancelOperation;
         $this->paymentMethods = $paymentMethods;
         $this->urlBuilder = $urlBuilder;
+        $this->quoteDeactivator = $quoteDeactivator;
     }
 
     /**
@@ -101,6 +109,8 @@ class CreateNewSchedule
     ): void {
         $subscriptionId = $schedule->getSubscriptionId();
         $subscription = $this->subscriptionRepository->getBySubscriptionId($subscriptionId);
+
+        $this->quoteDeactivator->deactivateQuote();
 
         if (!in_array($subscription->getPaymentMethod(), $this->paymentMethods, true)) {
             return;
