@@ -113,6 +113,7 @@ class RecurringRequestParamsTest extends TestCase
      * @magentoConfigFixture current_store currency/options/base EUR
      * @magentoConfigFixture current_store currency/options/default EUR
      * @magentoConfigFixture current_store payment/worldline_redirect_payment/active 1
+     * @magentoConfigFixture current_store payment/worldline_redirect_payment_1/active 1
      * @magentoConfigFixture current_store payment/worldline_redirect_payment/cart_lines 0
      * @magentoConfigFixture current_store payment/worldline_redirect_payment/payment_action authorize_capture
      * @magentoDbIsolation disabled
@@ -126,8 +127,8 @@ class RecurringRequestParamsTest extends TestCase
 
         $request = $this->rpCreateRequestBuilder->build($quote);
 
-        $this->assertFalse(
-            $request->getCardPaymentMethodSpecificInput()->getSkipAuthentication()
+        $this->assertTrue(
+            $request->getRedirectPaymentMethodSpecificInput()->getTokenize()
         );
 
         $this->assertFalse(

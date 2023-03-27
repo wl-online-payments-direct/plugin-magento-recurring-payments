@@ -17,7 +17,7 @@
     <!-- add recurring data to hosted checkout specific input -->
     <event name="worldline_hosted_checkout_hosted_checkout_specific_input_builder">
         <observer name="worldline_recurring_payments_hc_add_data_to_hosted_checkout_specific_input"
-                  instance="Worldline\RecurringPayments\Observer\HostedCheckout\Service\Creator\Request\HostedCheckoutSIDBuilder\AddRecurringData" />
+                  instance="Worldline\RecurringPayments\Observer\HostedCheckout\Service\Creator\Request\HostedCheckoutSIDBuilder\FilterPaymentProducts" />
     </event>
 
     <!-- nullify order grand total in hosted checkout order data builder -->
@@ -48,5 +48,11 @@
     <event name="worldline_core_payment_products_cache_id_generate">
         <observer name="worldline_recurring_payments_core_generate_cache_id"
                   instance="Worldline\RecurringPayments\Observer\PaymentCore\Model\Ui\PaymentProductsProvider\GenerateCacheId" />
+    </event>
+
+    <!-- add recurring data to sepa direct debit specific input -->
+    <event name="worldline_hosted_checkout_sepa_direct_debit_specific_input_builder">
+        <observer name="worldline_recurring_payments_hc_add_data_to_sepa_direct_debit_specific_input"
+                  instance="Worldline\RecurringPayments\Observer\HostedCheckout\Service\CreateHostedCheckoutRequest\SepaDDSIBuilder\AddRecurringData" />
     </event>
 </config>

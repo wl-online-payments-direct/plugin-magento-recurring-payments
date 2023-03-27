@@ -7,13 +7,13 @@ use Magento\Framework\Exception\LocalizedException;
 use Psr\Log\LoggerInterface;
 use Worldline\HostedCheckout\Service\HostedCheckout\GetHostedCheckoutStatusService;
 use Worldline\PaymentCore\Api\Service\Token\DeleteTokenServiceInterface;
-use Worldline\PaymentCore\Model\ResourceModel\Quote as QuoteResource;
+use Worldline\PaymentCore\Api\QuoteResourceInterface;
 use Worldline\RecurringPayments\Api\SubscriptionRepositoryInterface;
 
 class TokenReplacement
 {
     /**
-     * @var QuoteResource
+     * @var QuoteResourceInterface
      */
     private $quoteResource;
 
@@ -38,7 +38,7 @@ class TokenReplacement
     private $deleteTokenService;
 
     public function __construct(
-        QuoteResource $quoteResource,
+        QuoteResourceInterface $quoteResource,
         GetHostedCheckoutStatusService $getRequest,
         LoggerInterface $logger,
         SubscriptionRepositoryInterface $subscriptionRepository,
@@ -67,14 +67,21 @@ class TokenReplacement
             throw new LocalizedException(__('The payment has failed, please, try again'));
         }
 
-        $wlSubscription = $this->subscriptionRepository->getBySubscriptionId($subscriptionId);
-        $oldToken = (string)$wlSubscription->getToken();
+        if ($response->getStatus() === 'CANCELLED_BY_CONSUMER') {
+            throw new LocalizedException(__('The payment has been canceled, please, try again'));
+        }
 
         $cardPaymentMethodSpecificOutput = $response->getCreatedPaymentOutput()
             ->getPayment()
             ->getPaymentOutput()
             ->getCardPaymentMethodSpecificOutput();
 
+        if (!$cardPaymentMethodSpecificOutput) {
+            return;
+        }
+
+        $wlSubscription = $this->subscriptionRepository->getBySubscriptionId($subscriptionId);
+        $oldToken = (string)$wlSubscription->getToken();
         $wlSubscription->setToken((string)$cardPaymentMethodSpecificOutput->getToken());
         $wlSubscription->setPaymentProductId((int)$cardPaymentMethodSpecificOutput->getPaymentProductId());
         $this->subscriptionRepository->save($wlSubscription);
