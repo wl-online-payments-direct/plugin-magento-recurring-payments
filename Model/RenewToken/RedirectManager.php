@@ -49,7 +49,7 @@ class RedirectManager
     private $quoteContext;
 
     /**
-     * CollectionFactory
+     * @var CollectionFactory
      */
     private $subscriptionPlanCollectionFactory;
 
