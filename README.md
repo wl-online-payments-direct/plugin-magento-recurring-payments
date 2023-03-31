@@ -21,6 +21,9 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.4.1
+- General code improvements and bug fixes.
+
 #### 1.4.0
 - Add Sepa Direct Debit payment method.
 - General code improvements and bug fixes.
