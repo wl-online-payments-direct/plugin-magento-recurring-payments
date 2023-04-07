@@ -21,6 +21,9 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.4.2
+- Add fix for Adobe Commerce cloud instances.
+
 #### 1.4.1
 - General code improvements and bug fixes.
 
