@@ -11,6 +11,8 @@ use Worldline\RecurringPayments\Model\QuoteContext;
 
 class GenerateCacheId implements ObserverInterface
 {
+    public const CACHE_KEY = 'worldline_recurring_payments';
+
     /**
      * @var QuoteContext
      */
@@ -43,6 +45,6 @@ class GenerateCacheId implements ObserverInterface
             return;
         }
 
-        $cacheIdEntity->setCacheIdentifier($cacheIdEntity->getCacheIdentifier() . '_' . 'worldline_recurring_payments');
+        $cacheIdEntity->setCacheIdentifier($cacheIdEntity->getCacheIdentifier() . '_' . self::CACHE_KEY);
     }
 }

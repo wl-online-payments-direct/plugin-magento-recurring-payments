@@ -1,6 +1,9 @@
 //
 //  Worldline Recurring Payments Email Templates
 //  ____________________________________________
+@button__background-color: #008236;
+@button__background-color-hover: #036f30;
+@button__color: #fff;
 
 .amrec-text-container {
     .amrec-message.-link {
@@ -8,24 +11,24 @@
     }
 
     .wlrec-linkbutton {
-        padding: 10px;
-        background-color: #008236;
+        background-color: @button__background-color;
         border-radius: 7px;
-        color: #fff;
-        text-decoration: none!important;
-        transition: background-color .3s ease-in;
+        color: @button__color;
+        display: inline-block;
         font-size: 16px;
         font-weight: 600;
         margin-top: 10px;
-        display: inline-block;
+        padding: 10px;
+        text-decoration: none !important;
+        transition: background-color .3s ease-in;
     }
 
     .wlrec-linkbutton:hover {
-        background-color: #036f30!important;
-        text-decoration: none!important;
+        background-color: @button__background-color-hover !important;
+        text-decoration: none !important;
     }
 
     .wlrec-linkbutton:visited {
-        color: #fff!important;
+        color: @button__color !important;
     }
 }
