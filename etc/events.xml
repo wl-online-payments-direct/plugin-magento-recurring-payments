@@ -55,4 +55,14 @@
         <observer name="worldline_recurring_payments_hc_add_data_to_sepa_direct_debit_specific_input"
                   instance="Worldline\RecurringPayments\Observer\HostedCheckout\Service\CreateHostedCheckoutRequest\SepaDDSIBuilder\AddRecurringData" />
     </event>
+
+    <event name="adminhtml_cache_flush_system">
+        <observer name="Worldline_RecurringPayments::flush_system_pagecache" instance="Worldline\RecurringPayments\Observer\Cache\FlushPaymentProducts" />
+    </event>
+    <event name="adminhtml_cache_refresh_type">
+        <observer name="Worldline_RecurringPayments::refresh_cache" instance="Worldline\RecurringPayments\Observer\Cache\FlushPaymentProducts"/>
+    </event>
+    <event name="adminhtml_cache_flush_all">
+        <observer name="Worldline_RecurringPayments::flush_all_cache" instance="Worldline\RecurringPayments\Observer\Cache\FlushPaymentProducts"/>
+    </event>
 </config>

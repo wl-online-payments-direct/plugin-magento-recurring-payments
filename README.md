@@ -21,6 +21,11 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.4.3
+- Add support for Magento 2.4.6.
+- Add support for the 5.0.0 version of PHP SDK.
+- General code improvements.
+
 #### 1.4.2
 - Add fix for Adobe Commerce cloud instances.
 

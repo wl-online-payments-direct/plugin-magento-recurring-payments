@@ -4,12 +4,12 @@
     "require": {
         "php":">=7.3",
         "ext-json": "*",
-        "worldline/module-magento-payment-credit-card": "1.8.2",
-        "worldline/module-magento-payment-redirect-payment": "1.7.2",
+        "worldline/module-magento-payment-credit-card": "1.9.0",
+        "worldline/module-magento-payment-redirect-payment": "1.8.0",
         "amasty/recurring-payments": "^1.6.13"
     },
     "type": "magento2-module",
-    "version": "1.4.2",
+    "version": "1.4.3",
     "license": ["MIT"],
     "provide": {
         "amasty/recurring-payments-gateway": "1.0.0"
