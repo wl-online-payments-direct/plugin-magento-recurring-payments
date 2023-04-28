@@ -74,6 +74,7 @@ class TransactionGeneratorPart implements HandlerPartInterface
     public function handlePartial(HandleOrderContext $context): bool
     {
         $quote = $context->getQuote();
+
         $this->wlQuoteContext->setQuote($quote);
         $payment = $quote->getPayment();
         $storeId = (int)$quote->getStoreId();
@@ -98,7 +99,9 @@ class TransactionGeneratorPart implements HandlerPartInterface
             $response->getPayment()->getPaymentOutput(),
             $transactionId
         );
-        $context->setRecurringTransaction($recurringTransaction);
+        if ($recurringTransaction) {
+            $context->setRecurringTransaction($recurringTransaction);
+        }
 
         if ($this->amRecurringConfig->isNotifySubscriptionPurchased($storeId)) {
             $template = $this->amRecurringConfig->getEmailTemplateSubscriptionPurchased($storeId);

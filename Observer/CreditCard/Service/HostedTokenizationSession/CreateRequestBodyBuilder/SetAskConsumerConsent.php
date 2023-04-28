@@ -41,7 +41,7 @@ class SetAskConsumerConsent implements ObserverInterface
      * @throws LocalizedException
      * @throws NoSuchEntityException
      */
-    public function execute(Observer $observer)
+    public function execute(Observer $observer): void
     {
         /** @var CreateHostedTokenizationRequest $createHostedTokenizationRequest */
         $createHostedTokenizationRequest = $observer->getData(

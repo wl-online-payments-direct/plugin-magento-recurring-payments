@@ -6,11 +6,9 @@ namespace Worldline\RecurringPayments\Observer\PaymentCore\Service\Payment\GetPa
 use Amasty\RecurringPayments\Model\QuoteValidate;
 use Magento\Framework\Event\Observer;
 use Magento\Framework\Event\ObserverInterface;
-use Magento\Framework\Exception\LocalizedException;
-use Magento\Framework\Exception\NoSuchEntityException;
 use OnlinePayments\Sdk\Merchant\Products\GetPaymentProductsParams;
-use Worldline\RecurringPayments\Model\QuoteContext;
 use Worldline\PaymentCore\Service\Payment\GetPaymentProductsRequestBuilder;
+use Worldline\RecurringPayments\Model\QuoteContext;
 
 /**
  * @SuppressWarnings(PHPMD.CookieAndSessionMisuse)
@@ -38,10 +36,8 @@ class AddRecurringParam implements ObserverInterface
      *
      * @param Observer $observer
      * @return void
-     * @throws LocalizedException
-     * @throws NoSuchEntityException
      */
-    public function execute(Observer $observer)
+    public function execute(Observer $observer): void
     {
         /** @var GetPaymentProductsParams $getPaymentProductsParams */
         $getPaymentProductsParams = $observer->getData(GetPaymentProductsRequestBuilder::GET_PAYMENT_PRODUCTS_PARAMS);

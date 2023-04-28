@@ -98,11 +98,9 @@ class SubscriptionDetailsHandler implements HandlerInterface
             return $output;
         }
 
-        $output = $transaction->getCreatedPaymentOutput()
+        return $transaction->getCreatedPaymentOutput()
             ->getPayment()
             ->getPaymentOutput()
             ->getSepaDirectDebitPaymentMethodSpecificOutput();
-
-        return $output;
     }
 }

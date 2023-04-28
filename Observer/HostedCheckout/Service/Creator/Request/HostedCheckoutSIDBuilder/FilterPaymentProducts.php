@@ -74,7 +74,7 @@ class FilterPaymentProducts implements ObserverInterface
      * @see \Worldline\HostedCheckout\Service\CreateHostedCheckoutRequest\SpecificInputDataBuilder::build()
      *
      */
-    public function execute(Observer $observer)
+    public function execute(Observer $observer): void
     {
         /** @var CartInterface $quote */
         $quote = $observer->getData('quote');
@@ -111,7 +111,7 @@ class FilterPaymentProducts implements ObserverInterface
         HostedCheckoutSpecificInput $hostedCheckoutSpecificInput
     ): void {
         $quoteFromContext = $this->quoteContext->getQuote();
-        if ($quote->getId() == $quoteFromContext->getId() && $quoteFromContext->getRenewTokenProcessFlag()) {
+        if ($quoteFromContext->getRenewTokenProcessFlag() && $quote->getId() == $quoteFromContext->getId()) {
             $returnUrl = $this->urlBuilder->getUrl(
                 self::RETURN_URL,
                 ['subscription_id' => $quoteFromContext->getSubscriptionId()]

@@ -50,7 +50,7 @@ class PaymentsCounter
             return 0.0;
         }
 
-        list($startDate, $endDate) = $this->startEndDatesResolver->getStartEndDatesForCount($item);
+        [$startDate, $endDate] = $this->startEndDatesResolver->getStartEndDatesForCount($item);
         $disableDiscount = (bool)$plan->getEnableDiscountLimit();
 
         try {

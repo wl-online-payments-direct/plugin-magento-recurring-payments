@@ -101,7 +101,7 @@ class SubscriptionInfoBuilder
     private function setOrderData(
         SubscriptionInfoInterface $subscriptionInfo,
         SubscriptionDataContainer $subscriptionDataContainer
-    ) {
+    ): void {
         if (!$order = $subscriptionDataContainer->getOrder()) {
             return;
         }
@@ -116,7 +116,7 @@ class SubscriptionInfoBuilder
         SubscriptionInfoInterface $subscriptionInfo,
         SubscriptionInterface $subscription,
         SubscriptionDataContainer $subscriptionDataContainer
-    ) {
+    ): void {
         $lastTransaction = $subscriptionDataContainer->getLastTransaction();
         if (!$lastTransaction || !$subscription->getLastPaymentDate()) {
             return;

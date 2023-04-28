@@ -104,7 +104,7 @@ class SubscriptionDataProvider
     public function getRelatedOrders(array $subscriptions): array
     {
         $orderIds = array_map(
-            function (SubscriptionInterface $subscription) {
+            static function (SubscriptionInterface $subscription) {
                 return $subscription->getOrderId();
             },
             $subscriptions
@@ -120,7 +120,7 @@ class SubscriptionDataProvider
     public function getRelatedProducts(array $subscriptions): array
     {
         $productIds = array_map(
-            function (SubscriptionInterface $subscription) {
+            static function (SubscriptionInterface $subscription) {
                 return $subscription->getProductId();
             },
             $subscriptions
@@ -136,7 +136,7 @@ class SubscriptionDataProvider
     public function getRelatedLastTransactions(array $subscriptions): array
     {
         $subscriptionIds = array_map(
-            function (SubscriptionInterface $subscription) {
+            static function (SubscriptionInterface $subscription) {
                 return $subscription->getSubscriptionId();
             },
             $subscriptions

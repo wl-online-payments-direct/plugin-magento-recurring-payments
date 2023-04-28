@@ -47,7 +47,7 @@ class NullifyGrandTotal implements ObserverInterface
         }
 
         $quoteFromContext = $this->quoteContext->getQuote();
-        if ($quote->getId() == $quoteFromContext->getId() && $quoteFromContext->getRenewTokenProcessFlag()) {
+        if ($quoteFromContext->getRenewTokenProcessFlag() && $quote->getId() == $quoteFromContext->getId()) {
             $quote->setGrandTotal(0);
             $orderData->getAmountOfMoney()->setAmount(0);
         }
