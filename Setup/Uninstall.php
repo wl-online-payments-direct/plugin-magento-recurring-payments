@@ -29,20 +29,20 @@ class Uninstall implements UninstallInterface
     }
 
     /**
-     * @param SchemaSetupInterface $installer
+     * @param SchemaSetupInterface $setup
      * @param ModuleContextInterface $context
      * @return void
      *
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function uninstall(SchemaSetupInterface $installer, ModuleContextInterface $context): void
+    public function uninstall(SchemaSetupInterface $setup, ModuleContextInterface $context): void
     {
-        $installer->startSetup();
+        $setup->startSetup();
 
-        $installer->getConnection()->dropTable($installer->getTable(Subscription::TABLE_NAME));
+        $setup->getConnection()->dropTable($setup->getTable(Subscription::TABLE_NAME));
         $this->clearConfigurations();
 
-        $installer->endSetup();
+        $setup->endSetup();
     }
 
     private function clearConfigurations(): void

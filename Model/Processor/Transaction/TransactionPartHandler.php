@@ -73,6 +73,7 @@ class TransactionPartHandler implements HandlerPartInterface
     public function handlePartial(HandleOrderContext $context): bool
     {
         $quote = $context->getQuote();
+
         $payment = $quote->getPayment();
         $payment->setMethod($context->getSubscription()->getPaymentMethod());
         $paymentId = (string)$payment->getAdditionalInformation(PaymentDataBuilder::PAYMENT_ID);

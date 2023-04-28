@@ -59,8 +59,8 @@ class OrderDataBuilder
         $order->setAmountOfMoney($this->amountDataBuilder->build($quote));
         $order->setReferences($this->referenceDataBuilder->build($quote));
 
-        if ($this->generalSettings->isApplySurcharge((int)$quote->getStoreId())
-            && (float)$quote->getGrandTotal() > 0.00001
+        if ((float)$quote->getGrandTotal() > 0.00001
+            && $this->generalSettings->isApplySurcharge((int)$quote->getStoreId())
         ) {
             $order->setSurchargeSpecificInput($this->surchargeDataBuilder->build());
         }

@@ -84,19 +84,19 @@ class SubscriptionInfoStatusDataAssigner
         return $nextBillingDateObject <= $subscriptionEndDateObject;
     }
 
-    private function setCanceledStatus(SubscriptionInfoInterface $subscriptionInfo)
+    private function setCanceledStatus(SubscriptionInfoInterface $subscriptionInfo): void
     {
         $subscriptionInfo->setIsActive(false);
         $subscriptionInfo->setStatus(__('Canceled')->__toString());
     }
 
-    private function setActiveStatus(SubscriptionInfoInterface $subscriptionInfo)
+    private function setActiveStatus(SubscriptionInfoInterface $subscriptionInfo): void
     {
         $subscriptionInfo->setIsActive(true);
         $subscriptionInfo->setStatus(__('Active')->__toString());
     }
 
-    private function setTrial(SubscriptionInfoInterface $subscriptionInfo, SubscriptionInterface $subscription)
+    private function setTrial(SubscriptionInfoInterface $subscriptionInfo, SubscriptionInterface $subscription): void
     {
         if (!$this->dateTimeInterval->isTrialPeriodActive(
             $subscription->getStartDate(),

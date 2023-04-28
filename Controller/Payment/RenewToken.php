@@ -66,7 +66,6 @@ class RenewToken extends Action implements HttpGetActionInterface
             $renewUrl = $this->url->getBaseUrl();
         }
 
-        $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
-        return $resultRedirect->setUrl($renewUrl);
+        return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setUrl($renewUrl);
     }
 }

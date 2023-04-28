@@ -68,7 +68,11 @@ class TransactionGeneratorManager
         OrderInterface $order,
         PaymentOutput $paymentOutput,
         string $transactionId
-    ): TransactionInterface {
+    ): ?TransactionInterface {
+        if (!$context->getSubscription()) {
+            return null;
+        }
+
         $transactionAmount = (int)$paymentOutput->getAcquiredAmount()->getAmount();
         $transactionCurrency = $paymentOutput->getAcquiredAmount()->getCurrencyCode();
 

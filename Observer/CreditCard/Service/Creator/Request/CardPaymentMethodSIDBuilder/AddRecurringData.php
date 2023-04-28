@@ -29,7 +29,7 @@ class AddRecurringData implements ObserverInterface
      * @see \Worldline\CreditCard\Service\CreatePaymentRequest\CardPaymentMethodSIDBuilder::build()
      *
      */
-    public function execute(Observer $observer)
+    public function execute(Observer $observer): void
     {
         /** @var CartInterface $quote */
         $quote = $observer->getData('quote');
