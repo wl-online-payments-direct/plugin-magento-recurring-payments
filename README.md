@@ -21,6 +21,16 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.4.6
+- Fixed issue of products with special pricing not displaying the original price in order view.
+- Fixed issue with configurable product on cart restoration when user clicks the browser back button.
+- Fixed issue with last payment id not fetched properly.
+- Fixed issue where carts are restored incompletely.
+- Fixed issue when customer attribute doesn't display in order after paying.
+- Added customer address attributes validation before placing order.
+- Added a setting to stop sending refusal emails.
+- Added compatibility with Php Sdk 5.4.0.
+
 #### 1.4.5
 - Add support for the 5.3.0 version of PHP SDK.
 - Fix connection credential caching.
