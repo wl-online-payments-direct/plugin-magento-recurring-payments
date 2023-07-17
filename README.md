@@ -21,6 +21,15 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.5.0
+- Added new payment method “Giftcard Limonetik".
+- Added new setting "Enable Sending Payment Refused Emails".
+- Improved handling of Magento 2 display errors.
+- Fixed hosted tokenization js link for production transactions.
+- Fixed order creation issue on successful transactions.
+- Fixed webhooks issue for rejected transactions with empty refund object.
+- General code improvements.
+
 #### 1.4.6
 - Fixed issue of products with special pricing not displaying the original price in order view.
 - Fixed issue with configurable product on cart restoration when user clicks the browser back button.
