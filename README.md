@@ -21,6 +21,17 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.6.0
+- Added new payment method “Union Pay International".
+- Added new payment method “Przelewy24".
+- Added new payment method “EPS".
+- Added new payment method “Twint".
+- Added compatibility with Php Sdk 5.6.0.
+- Added compatibility with Amasty Subscriptions & Recurring Payments extension 1.6.15.
+- Improved plugin landing page "About Worldline".
+- Improved Hosted Tokenization error message when transaction is declined.
+- Improved concatenation of streetline1 and streetline2 for billing & shipping address.
+
 #### 1.5.0
 - Added new payment method “Giftcard Limonetik".
 - Added new setting "Enable Sending Payment Refused Emails".
