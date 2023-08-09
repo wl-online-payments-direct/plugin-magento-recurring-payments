@@ -27,6 +27,11 @@
                 <amasty_subscriptions_display_name>Mastercard</amasty_subscriptions_display_name>
                 <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
             </worldline_redirect_payment_3>
+            <worldline_redirect_payment_56>
+                <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
+                <amasty_subscriptions_display_name>Union Pay International</amasty_subscriptions_display_name>
+                <amasty_subscriptions_cron_handled>1</amasty_subscriptions_cron_handled>
+            </worldline_redirect_payment_56>
             <worldline_redirect_payment_117>
                 <supports_amasty_subscriptions>1</supports_amasty_subscriptions>
                 <amasty_subscriptions_display_name>Maestro</amasty_subscriptions_display_name>

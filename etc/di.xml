@@ -11,6 +11,7 @@
                 <item name="worldline_redirect_payment_1" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
                 <item name="worldline_redirect_payment_2" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
                 <item name="worldline_redirect_payment_3" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
+                <item name="worldline_redirect_payment_56" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
                 <item name="worldline_redirect_payment_117" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
                 <item name="worldline_redirect_payment_125" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
                 <item name="worldline_redirect_payment_130" xsi:type="object">Worldline\RecurringPayments\Model\RedirectPayment\Config\ConfigurationValidator</item>
@@ -44,6 +45,7 @@
                 <item name="worldline_redirect_payment_1" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
                 <item name="worldline_redirect_payment_2" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
                 <item name="worldline_redirect_payment_3" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
+                <item name="worldline_redirect_payment_56" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
                 <item name="worldline_redirect_payment_117" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
                 <item name="worldline_redirect_payment_125" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
                 <item name="worldline_redirect_payment_130" xsi:type="string">Worldline\RecurringPayments\Model\Subscription\Create\Processor\Virtual</item>
@@ -85,6 +87,7 @@
                 <item name="worldline_redirect_payment_1" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
                 <item name="worldline_redirect_payment_2" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
                 <item name="worldline_redirect_payment_3" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
+                <item name="worldline_redirect_payment_56" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
                 <item name="worldline_redirect_payment_117" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
                 <item name="worldline_redirect_payment_125" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
                 <item name="worldline_redirect_payment_130" xsi:type="object">Worldline\RecurringPayments\Model\Processor\HandleSubscriptionCharge</item>
@@ -104,6 +107,7 @@
                 <item name="worldline_redirect_payment_1" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
                 <item name="worldline_redirect_payment_2" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
                 <item name="worldline_redirect_payment_3" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
+                <item name="worldline_redirect_payment_56" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
                 <item name="worldline_redirect_payment_117" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
                 <item name="worldline_redirect_payment_125" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
                 <item name="worldline_redirect_payment_130" xsi:type="object">Worldline\RecurringPayments\Model\Subscription\Cancel\CancelSubscriptionHandler\Proxy</item>
@@ -123,6 +127,7 @@
                 <item name="worldline_redirect_payment_1" xsi:type="string">worldline_redirect_payment_1</item>
                 <item name="worldline_redirect_payment_2" xsi:type="string">worldline_redirect_payment_2</item>
                 <item name="worldline_redirect_payment_3" xsi:type="string">worldline_redirect_payment_3</item>
+                <item name="worldline_redirect_payment_56" xsi:type="string">worldline_redirect_payment_56</item>
                 <item name="worldline_redirect_payment_117" xsi:type="string">worldline_redirect_payment_117</item>
                 <item name="worldline_redirect_payment_125" xsi:type="string">worldline_redirect_payment_125</item>
                 <item name="worldline_redirect_payment_130" xsi:type="string">worldline_redirect_payment_130</item>
@@ -141,6 +146,7 @@
                 <item name="worldline_redirect_payment_1" xsi:type="string">worldline_redirect_payment_1</item>
                 <item name="worldline_redirect_payment_2" xsi:type="string">worldline_redirect_payment_2</item>
                 <item name="worldline_redirect_payment_3" xsi:type="string">worldline_redirect_payment_3</item>
+                <item name="worldline_redirect_payment_56" xsi:type="string">worldline_redirect_payment_56</item>
                 <item name="worldline_redirect_payment_117" xsi:type="string">worldline_redirect_payment_117</item>
                 <item name="worldline_redirect_payment_125" xsi:type="string">worldline_redirect_payment_125</item>
                 <item name="worldline_redirect_payment_130" xsi:type="string">worldline_redirect_payment_130</item>
