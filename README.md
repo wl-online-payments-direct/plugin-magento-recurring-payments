@@ -21,6 +21,16 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.7.0
+- Added own branded gift card compatibility for Intersolve payment method.
+- Added compatibility with Php Sdk 5.7.0.
+- Modified plugin tab "dynamic order status synchronization" to “Settings & Notifications”.
+- Fixed value determination process for "AddressIndicator" parameter.
+- Fixed issues with creating orders by cron.
+- Fixed issue with Magento confirmation page when using PayPal payment method.
+- Fixed issue with auto refund for out-of-stock feature.
+- Fixed issue when using a database prefix.
+
 #### 1.6.0
 - Added new payment method “Union Pay International".
 - Added new payment method “Przelewy24".
