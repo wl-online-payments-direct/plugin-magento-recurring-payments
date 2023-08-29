@@ -45,7 +45,7 @@ class ScheduleProvider
     public function updateFailedSchedules(string $subscriptionId): void
     {
         $connection = $this->resourceConnection->getConnection();
-        $scheduleTable = $connection->getTableName(Schedule::TABLE_NAME);
+        $scheduleTable = $this->resourceConnection->getTableName(Schedule::TABLE_NAME);
         $insertData = [ScheduleInterface::STATUS => self::STATUS_HANDLED];
         $where = [
             ScheduleInterface::SUBSCRIPTION_ID . ' = ?' => $subscriptionId,
