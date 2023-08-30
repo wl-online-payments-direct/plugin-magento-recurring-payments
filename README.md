@@ -21,6 +21,10 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.7.1
+- Fixed issue with partial invoices and partial credit memos.
+- Fixed transaction ID value for request to check if payment can be cancelled.
+
 #### 1.7.0
 - Added own branded gift card compatibility for Intersolve payment method.
 - Added compatibility with Php Sdk 5.7.0.
