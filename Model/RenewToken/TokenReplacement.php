@@ -58,6 +58,10 @@ class TokenReplacement
         }
 
         $quote = $this->quoteResource->getQuoteByWorldlinePaymentId($paymentId);
+        if (!$quote) {
+            return;
+        }
+
         $storeId = (int)$quote->getStoreId();
 
         try {

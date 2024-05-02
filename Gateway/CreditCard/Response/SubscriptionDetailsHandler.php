@@ -49,7 +49,7 @@ class SubscriptionDetailsHandler implements HandlerInterface
         $paymentDO = $this->subjectReader->readPayment($handlingSubject);
         $orderIncrementId = $paymentDO->getOrder()->getOrderIncrementId();
         $quote = $this->quoteResource->getQuoteByReservedOrderId($orderIncrementId);
-        if (!$this->quoteValidate->validateQuote($quote)) {
+        if (!$quote || !$this->quoteValidate->validateQuote($quote)) {
             return;
         }
 
