@@ -21,6 +21,11 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.12.0
+- Added trusted URLs to the CSP whitelist.
+- Improved reliability of fallback cron job.
+- Fixed credentials caching issue when simultaneously processing refunds for multiple merchant IDs.
+
 #### 1.11.0
 - Improved the order creation process by tracking multiple paymentIDs.
 - Improved logging and exception handling when multiple payments are done for a single order.
