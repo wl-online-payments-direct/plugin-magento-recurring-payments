@@ -21,6 +21,9 @@ This addon includes the following worldline solutions:
 
 ### Change log:
 
+#### 1.13.0
+- Improved display of shipping costs on the payment page for Hosted Checkout and Redirect Payment.
+
 #### 1.12.0
 - Added trusted URLs to the CSP whitelist.
 - Improved reliability of fallback cron job.
